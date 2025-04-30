@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import CantonSelect from "./CantonSelect.jsx";
+import ZoneSelect from "./ZoneSelect.jsx";
 import challenge from './assets/challengesmall.png'
 import curse from './assets/cursesmall.png'
 
@@ -292,7 +292,7 @@ function AuthDisplay(props) {
             <Grid2 item size={12}>
               <Paper sx={{ p: 2 }} elevation={props.elevation}>
                 <Grid2 spacing={2} container>
-                  <CantonSelect teams={props.teams} canton={props.canton} setCanton={props.setCanton} cantons={props.cantons} />
+                  <ZoneSelect teams={props.teams} canton={props.canton} setCanton={props.setCanton} cantons={props.cantons} />
                   <Grid2 item size={{ xs: 12, lg: 12 }}>
                     <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
                       <Autocomplete

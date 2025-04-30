@@ -1,4 +1,4 @@
-import Switzerland from './Switzerland.jsx'
+import Game from './Game.jsx'
 import Login from './Login.jsx'
 import {
   AppBar,
@@ -47,13 +47,13 @@ function App() {
               <AppBar position="sticky">
                 <Toolbar>
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Swiss Scramble 🇨🇭
+                    Seattle Scamper
                   </Typography>
                   {auth == null ? (<NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log In</Button></NavLink>) : <Button onClick={logout} color="inherit">Log Out</Button>}
                 </Toolbar>
               </AppBar>
                   <ThemeProvider theme={theme}>
-                    <Switzerland
+                    <Game
                       auth={auth}
                       backend={backend}
                     />

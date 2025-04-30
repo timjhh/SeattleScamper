@@ -41,12 +41,12 @@ function Score(props) {
         return "None"
     }
 
-    useEffect(() => {
-        let group = groupBy(props.cantons, 'team_id')
-        // Remove keys like 'null'.
-        Object.keys(group).forEach(k => (k === "null" || k === '0' || k === 0) && delete group[k])
-        setScore(group)
-    }, [props.cantons])
+    // useEffect(() => {
+    //     let group = groupBy(props.cantons, 'team_id')
+    //     // Remove keys like 'null'.
+    //     Object.keys(group).forEach(k => (k === "null" || k === '0' || k === 0) && delete group[k])
+    //     setScore(group)
+    // }, [props.cantons])
 
     return (
         <>
