@@ -7,7 +7,6 @@ import * as d3 from 'd3';
 
 import { useEffect, useState, useRef } from 'react';
 import './App.css';
-import * as topojson from 'topojson-client'
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
@@ -170,36 +169,31 @@ function Game(props) {
             .data(data.features)
             .join("g")
             .attr("class", "mapholder")
+            .attr("id", "mapzoneid")
 
         mapZones.append("path")
             .attr("class", "canton")
             .attr("d", path)
-            .attr("fill", getRandomColor())
-            .attr("id", d => d.properties.name)
+            .attr("fill", "oklch(0.7 0.1 142)")
+            .attr("id", d => d.properties.name.replaceAll(" ", ""))
             .attr("stroke", "black")
             .attr("stroke-width", "0.5px")
 
-        let rs = d3.select("#Roosevelt")
-        let bbox = rs.node().getBBox()
-        console.log([bbox.x + bbox.width/2, bbox.y + bbox.height/2])
-
-        mapZones
-        .append("circle")
-          .attr("cx", bbox.x + bbox.width/2)
-          .attr("cy", bbox.y + bbox.height/2)
-          .attr("r", 50)
-          .style("fill", "69b3a2")
-          .attr("stroke", "#69b3a2")
-          .attr("stroke-width", 3)
-          .attr("fill-opacity", .4)
-
+        createBubbleByNeighborhood("Roosevelt", 5, 5)
+        createBubbleByNeighborhood("GreenLake", 10, 10)
+        createBubbleByNeighborhood("Wallingford", 6, 10)
+        createBubbleByNeighborhood("UniversityDistrict", 5, 10)
+        createBubbleByNeighborhood("Montlake", 1, 8)
+        createBubbleByNeighborhood("Leschi", 1, 10)
+        createBubbleByNeighborhood("Broadway", 6, 9)
+//        createBubbleByNeighborhood("Ballard", 1)
 
         const zoom = d3
             .zoom()
-            .scaleExtent([0.5, 6])
+            .scaleExtent([1, 6])
             .translateExtent([[0, 0], [width, height]])
             .on("zoom", (d) => {
-                mapZones.attr("transform", d.transform);
+                g.attr("transform", d.transform);
             });
 
         d3.select("#slider")
@@ -212,6 +206,29 @@ function Game(props) {
             .attr("step", (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 100);
 
         svg.call(zoom)
+    }
+
+    function createBubbleByNeighborhood(neighborhood, count, size) {
+        let rs = d3.select(`#${neighborhood}`)
+        let bbox = rs.node().getBBox()
+        console.log([bbox.x + bbox.width/2, bbox.y + bbox.height/2])
+    
+        let cr = d3.select("#pathsG").select(".zones")
+        .append('g')
+        .attr("class", "mapholder")
+        .attr("transform", function(d){return "translate("+(bbox.x + bbox.width/2)+","+(bbox.y + bbox.height/2)+")"})
+
+        cr
+        .append("circle")
+          .attr("r", (size*5))
+          .style("fill", "#FFFFFF")
+          .attr("opacity", 0.5)
+          .attr("stroke", "#69b3a2")
+          .attr("stroke-width", 3)
+          .attr("fill-opacity", .4)
+        cr.append("text")
+        .attr("dx", -5)
+        .text(count)
     }
 
     function getRandomColor() {
