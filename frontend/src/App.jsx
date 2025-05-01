@@ -9,7 +9,7 @@ import {
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import { red, grey } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
 import Cookies from 'js-cookie'
 
@@ -18,7 +18,7 @@ const theme = createTheme({
     fontFamily: "Helvetica"
   },
   palette: {
-    primary: red,
+    primary: blue,
     secondary: {
       main: grey[100],
     }

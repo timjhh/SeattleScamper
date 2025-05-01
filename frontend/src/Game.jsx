@@ -179,6 +179,21 @@ function Game(props) {
             .attr("stroke", "black")
             .attr("stroke-width", "0.5px")
 
+        let rs = d3.select("#Roosevelt")
+        let bbox = rs.node().getBBox()
+        console.log([bbox.x + bbox.width/2, bbox.y + bbox.height/2])
+
+        mapZones
+        .append("circle")
+          .attr("cx", bbox.x + bbox.width/2)
+          .attr("cy", bbox.y + bbox.height/2)
+          .attr("r", 50)
+          .style("fill", "69b3a2")
+          .attr("stroke", "#69b3a2")
+          .attr("stroke-width", 3)
+          .attr("fill-opacity", .4)
+
+
         const zoom = d3
             .zoom()
             .scaleExtent([0.5, 6])
