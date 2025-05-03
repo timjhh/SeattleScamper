@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 import jwt
 
 from ..config import settings
-from ..database.models import User
+from ..database.models import Team
 from ..database.database import SessionDep
 from .models import TokenData
 from .crypto import get_password_hash, verify_password
@@ -27,9 +27,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 def get_user(db: SessionDep, username: str):
     """
-    Get the first user who's username matched the input.
+    Get the first team who's username matched the input.
     """
-    user = db.exec(select(User).where(User.username == username)).first()
+    user = db.exec(select(Team).where(Team.username == username)).first()
     logger.info("user: %s", user)
     return user
 
