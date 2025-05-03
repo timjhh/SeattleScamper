@@ -37,6 +37,9 @@ class Team(TeamBase, table=True):
 class TeamPublic(TeamBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     team_name: str = Field(index=True)
+    username: str = Field(index=True)
+    score: int = Field(index=True)
+    challenges: int = Field(default=0)
     #users: list["User"] = Relationship(back_populates="team")
     #cantons: list["Canton"] = Relationship(back_populates="team")
 

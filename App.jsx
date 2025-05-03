@@ -14,9 +14,9 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
 import Cookies from 'js-cookie'
 
 const theme = createTheme({
-  typography: {
-    fontFamily: "Helvetica"
-  },
+  // typography: {
+  //   fontFamily: "Helvetica"
+  // },
   palette: {
     primary: red,
     secondary: {

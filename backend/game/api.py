@@ -22,26 +22,21 @@ from ..database.models import (
 
 )
 from ..auth import auth
-
-TOLL_COST = 50
-
 router = APIRouter()
-
-
 
 @router.get("/team/")
 async def read_team(
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    return current_user.team
+    return current_user
 
 
 @router.get("/team/challenges/")
 async def read_team_cantons(
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    if current_user.team:
-        return current_user.team.cantons
+    if current_user:
+        return current_user
     return None
 
 @router.get("/score/")
@@ -51,7 +46,7 @@ async def read_teams(db: SessionDep):
 
 @router.get("/teams/", response_model=Sequence[TeamPublic])
 async def read_users(db: SessionDep):
-    return db.exec(select(Event)).all()
+    return db.exec(select(Team)).all()
 
 
 @router.get("/events/")
@@ -70,7 +65,7 @@ async def post_challenge(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    return "hi"
+    return "hia"
     # challenge_db = db.get(Challenge, challenge.id)
 
     # if challenge_db is None:
@@ -174,13 +169,13 @@ async def send_event(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    team = current_user.team
+    team = current_user
 
     if team is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
         )
 
-    text = "({0}) {1}: {2}".format(team.name, current_user.firstname, event.text)
+    text = "({0}) {1}".format(team.team_name, event.text)
 
-    new_event(db, text, team.name)
+    new_event(db, text, team.team_name)

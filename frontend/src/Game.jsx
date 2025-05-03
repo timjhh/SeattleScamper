@@ -81,8 +81,8 @@ function Game(props) {
                 console.log("Error rendering map data " + err);
             });
         // await fetchEndpoint("/zones/")
-        // await fetchEndpoint("/teams/")
-        // await fetchEndpoint("/challenges/")
+        await fetchEndpoint("/teams/")
+        await fetchEndpoint("/challenges/")
         // await fetchEndpoint("/curses/")
     }
 
@@ -101,10 +101,10 @@ function Game(props) {
         setZone(zones.find((e) => e.name == mapZone) || {})
     }, [mapZone]);
 
-    // useInterval(function() {
-    //     fetchEndpoint("/events/")
-    //     fetchEndpoint("/zones/")
-    // }, 5000)
+    useInterval(function() {
+        //fetchEndpoint("/events/")
+        //fetchEndpoint("/zones/")
+    }, 5000)
 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
@@ -146,7 +146,6 @@ function Game(props) {
             // .translate([width / 2, height / 2])
             //.precision(.1);
 
-        console.log(data)
         var path = d3.geoPath()
             .projection(projection);
 
@@ -211,8 +210,7 @@ function Game(props) {
     function createBubbleByNeighborhood(neighborhood, count, size) {
         let rs = d3.select(`#${neighborhood}`)
         let bbox = rs.node().getBBox()
-        console.log([bbox.x + bbox.width/2, bbox.y + bbox.height/2])
-    
+
         let cr = d3.select("#pathsG").select(".zones")
         .append('g')
         .attr("class", "mapholder")
@@ -273,7 +271,7 @@ function Game(props) {
     }
 
     async function fetchEvents() {
-        // await fetchEndpoint("/events/")
+        //await fetchEndpoint("/teams/")
         // await fetchEndpoint("/zones/")
     }
 
@@ -434,12 +432,15 @@ function Game(props) {
                     <Grid2 item size={{ xs: 11, md: 8 }}>
                         <Paper sx={{ p: 2 }} elevation={elevation}>
                             <Grid2 container spacing={2}>
-                                <Challenges challenges={challenges} />
+                                
                             </Grid2>
                         </Paper>
                     </Grid2>
                     </>
                 )}
+                <Grid2 item size={{ xs: 11, md: 8 }}>
+                    <Challenges elevation={elevation} challenges={challenges} />
+                </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
@@ -449,11 +450,11 @@ function Game(props) {
                     </Grid2>
                 }
                 <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Score teams={teams} canton={canton} elevation={elevation} zones={zones} />
+                    <Score teams={teams} elevation={elevation} zones={zones} />
                 </Grid2>
-                <Grid2 item size={{ xs: 11, md: 8 }}>
+                {/* <Grid2 item size={{ xs: 11, md: 8 }}>
                     <About elevation={elevation} />
-                </Grid2>
+                </Grid2> */}
             </Grid2>
         </>
     );

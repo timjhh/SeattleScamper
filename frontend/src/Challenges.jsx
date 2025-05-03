@@ -2,7 +2,9 @@
 import {
     FormControl,
     ListItem,
+    ListSubheader,
     ListItemText,
+    Paper,
     List,
     Typography
 } from "@mui/material";
@@ -10,8 +12,9 @@ import {
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
     return (
+        <Paper elevation={props.elevation}>
         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
-            <Typography variant="h5">Challenges</Typography>
+            <ListSubheader id="challenges-title">Challenges</ListSubheader>
             <List
                 sx={{
                     width: '100%',
@@ -25,12 +28,13 @@ function Challenges(props) {
             >
                 {props.challenges.sort((a, b) => Date.parse(b.time) - Date.parse(a.time)).map((item) => (
                     <ListItem key={`chal-${item.name}`} {...props}>
-                        <ListItemText primary={`${item.name}`} secondary={`${item.description} (${item.levels} Levels, ${item.money} ₣)`} />
+                        <ListItemText primary={`${item.name}`} secondary={`${item.description}`} />
                     </ListItem>
                 ))}
             </List>
 
         </FormControl>
+        </Paper>
     )
 }
 

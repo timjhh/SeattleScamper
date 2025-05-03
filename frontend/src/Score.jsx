@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import {
-    LinearProgress,
     Paper,
     Typography,
-    Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -14,53 +12,39 @@ var groupBy = function (xs, key) {
     }, {});
 };
 
-function LinearProgressWithLabel(props) {
-    return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ width: '100%', mr: 1 }}>
-                <LinearProgress variant="determinate" {...props} />
-            </Box>
-            <Box sx={{ minWidth: 35 }}>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {props.value}
-                </Typography>
-            </Box>
-        </Box>
-    );
-}
-
 function Score(props) {
     const [score, setScore] = useState({});
-
-    function getTeamName(id) {
-        if(props.teams && props.teams.length) {
-            let item = props.teams.find(e => e.id == id)
-            if(item) return item.name
-            
+    useEffect(() => {
+        if(props.teams.length > 0) {
+            let group = groupBy(props.teams, 'score')
+            console.log(Object.keys(group).sort().reverse())
+            setScore(group)
         }
-        return "None"
-    }
+    }, [props.teams])
 
-    // useEffect(() => {
-    //     let group = groupBy(props.cantons, 'team_id')
-    //     // Remove keys like 'null'.
-    //     Object.keys(group).forEach(k => (k === "null" || k === '0' || k === 0) && delete group[k])
-    //     setScore(group)
-    // }, [props.cantons])
+    function generateSuffix(num) {
+        let suffix = "";
+        if(num === 1) suffix="st";
+        if(num === 2) suffix="nd";
+        if(num === 3) suffix="rd";
+        if(num > 3) suffix="th";
+
+        return `${num}${suffix}`
+    }
 
     return (
         <>
         {Object.keys(score).length > 0 && (
         <Paper sx={{ p: 2 }} elevation={props.elevation}>
-            {Object.keys(score).map((key,idx) => (
-                <div key={`score${key}-${idx}`}>
-                    <Typography variant="h4" component="div" align="left" sx={{ flexGrow: 1 }}>{getTeamName(key)}</Typography>
-                    <LinearProgressWithLabel sx={{ height: 10, borderRadius: 5, }} key={key} variant="determinate" value={score[key].length} />
-                    <Typography variant="subtitle1" align="left" sx={{ color: 'text.secondary'}}>
-                        {score[key].map((c,idy) => 
-                        <span style={{ color: c.name === props.canton.name ? 'red' : '', fontWeight: c.name === props.canton.name ? 'bold' : 'normal'}} key={`${c.name}-${idx}-${idy}`}> {c.name}&nbsp;
-                        </span>)}
-                    </Typography>
+            {Object.keys(score).sort().reverse().map((key,idx) => (
+                <div key={`score${score[key].team_name}-${idx}`}>
+                    <Typography variant="h4" component="div" align="left" sx={{ flexGrow: 1 }}>{generateSuffix((idx+1))} Place:</Typography>
+                    {score[key].map(team => (
+                        <span key={`${idx}tm`}> {team.team_name}&nbsp;
+                        </span>
+                        // <Typography sx={{ color: 'text.secondary'}} variant="h6" component="div" align="left" key={`${idx}ttl`} sx={{ flexGrow: 1 }}>{team.team_name}</Typography>
+                    ))}
+                    
                 </div>
             ))}
         </Paper>

@@ -14,9 +14,9 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
 import Cookies from 'js-cookie'
 
 const theme = createTheme({
-  typography: {
-    fontFamily: "Helvetica"
-  },
+  // typography: {
+  //   fontFamily: "Helvetica"
+  // },
   palette: {
     primary: blue,
     secondary: {
@@ -47,7 +47,7 @@ function App() {
               <AppBar position="sticky">
                 <Toolbar>
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Seattle Scamper
+                    Seattle Scramble
                   </Typography>
                   {auth == null ? (<NavLink style={{ color: "white" }} to='/login'><Button color="inherit">Log In</Button></NavLink>) : <Button onClick={logout} color="inherit">Log Out</Button>}
                 </Toolbar>
