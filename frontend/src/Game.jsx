@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import {
     Grid2,
+    Box,
+    Typography,
+    Modal,
     Paper,
 } from "@mui/material";
 import * as d3 from 'd3';
@@ -10,7 +13,6 @@ import './App.css';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
-import About from './About.jsx';
 import Message from "./Message.jsx";
 import ZoneSelect from "./ZoneSelect.jsx";
 import Challenges from "./Challenges.jsx";
@@ -18,6 +20,29 @@ import Challenges from "./Challenges.jsx";
 function Game(props) {
     const elevation = 5;
     const destroyed = "oklch(0% 0 300)";
+
+
+    // image view modal toggles.
+    const [show, setShow] = useState(false);
+    const [currentURL, setCurrentURL] = useState("https://storage.cloud.google.com/horse-data-33f97.firebasestorage.app/5088876954/20250114_212926.jpg")
+    const handleClose = () => setShow(false);
+    const handleShow = (u) => {
+        setShow(true)
+        setCurrentURL(u)
+    }
+    
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        bgcolor: 'background.paper',
+        border: '1px solid #000',
+        boxShadow: 24,
+      };
+      
+
 
     // Coloring for map.
     const highlightColor = 'oklch(75% 0.1801 216.4)'
@@ -86,18 +111,18 @@ function Game(props) {
 
     // For canton selection updated through the ZoneSelect element,
     // ensure we update the map too.
-    useEffect(() => {
-        updateSelected(canton.name);
-    }, [canton]);
+    // useEffect(() => {
+    //     updateSelected(canton.name);
+    // }, [canton]);
 
-    useEffect(() => {
-        updateColors(zones)
-    }, [zones])
+    // useEffect(() => {
+    //     updateColors(zones)
+    // }, [zones])
 
-    useEffect(() => {
-        updateSelected(mapZone);
-        setZone(zones.find((e) => e.name == mapZone) || {})
-    }, [mapZone]);
+    // useEffect(() => {
+    //     updateSelected(mapZone);
+    //     setZone(zones.find((e) => e.name == mapZone) || {})
+    // }, [mapZone]);
 
     useInterval(function() {
         //fetchEndpoint("/events/")
@@ -388,6 +413,17 @@ function Game(props) {
     return (
         <>
             <SnackbarProvider maxSnack={5} />
+            <Modal
+                open={show}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >
+                <Box sx={style}>
+                    <img display="block" className="modalimg" src={currentURL}/>
+                </Box>
+            </Modal>
+
             <Grid2 sx={{ my: 2 }} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
@@ -397,7 +433,14 @@ function Game(props) {
                 </Grid2>
 
                 <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Challenges postEndpoint={postEndpoint} fetchEndpoint={fetchEndpoint} auth={props.auth} elevation={elevation} challenges={challenges} />
+                    <Challenges
+                     postEndpoint={postEndpoint} 
+                     fetchEndpoint={fetchEndpoint} 
+                     auth={props.auth} 
+                     elevation={elevation} 
+                     challenges={challenges}
+                     handleShow={handleShow}
+                     setCurrentURL={setCurrentURL} />
                 </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />

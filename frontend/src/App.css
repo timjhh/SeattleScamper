@@ -10,3 +10,8 @@
 body {
     margin: 0
 }
+
+.modalimg {
+    max-width: 100%;
+    max-height: 100%;
+}

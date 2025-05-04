@@ -70,19 +70,19 @@ function Challenges(props) {
                                                         )}
                                                 </ListItem>
                                             </Grid2>
-                                            <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 6, md: 6 }}>
-                                                    <Button variant="outlined">View</Button>
+                                            <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 6, md: 3 }}>
+                                                    <Button onClick={() => props.handleShow("https://storage.cloud.google.com/horse-data-33f97.firebasestorage.app/5088876954/20250114_212926.jpg")} variant="outlined">View</Button>
                                             </Grid2>
-                                            <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 6, md: 6 }}>
+                                            <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 6, md: 3 }}>
                                                 <Button variant="outlined" onClick={() => handleSubmitChallenge(item)} type="submit">Submit Photo</Button>
                                             </Grid2>
-                                            <Grid2 item size={{ xs: 6, md: 3 }}>
+                                            <Grid2 item size={{ xs: 6, md: 6 }}>
                                                 {
                                                     item.found && (<Typography variant="h5" component="div" align="center">✅ Found</Typography>)
                                                 }
 
                                             </Grid2>
-                                            <Grid2 item size={{ xs: 6, md: 3 }}>
+                                            <Grid2 item size={{ xs: 6, md: 6 }}>
 
                                                 {
                                                     item.completed && (<Typography variant="h5" component="div" align="center">✅ Completed</Typography>)
