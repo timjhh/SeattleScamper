@@ -17,7 +17,6 @@ function Score(props) {
     useEffect(() => {
         if(props.teams.length > 0) {
             let group = groupBy(props.teams, 'score')
-            console.log(Object.keys(group).sort().reverse())
             setScore(group)
         }
     }, [props.teams])

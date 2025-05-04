@@ -27,14 +27,13 @@ def load_default_data():
         db.commit()
         db.close()
 
-
 def load_admin_user():
     hashed_password = get_password_hash(settings.admin_pass)
     admin_user = Team(
         username=settings.admin_username,
         team_name="joe",
         score=0,
-        challenges=0,
+        challenges=[],
         hashed_password=hashed_password,
     )
     db = next(get_session())

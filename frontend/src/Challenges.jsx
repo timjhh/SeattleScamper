@@ -6,13 +6,16 @@ import {
     ListItemText,
     Paper,
     List,
-    Typography
+    Typography,
+    Button
 } from "@mui/material";
 
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
     return (
-        <Paper elevation={props.elevation}>
+        <>
+        {props.challenges.map((item) => (
+        <Paper sx={{my:1}} elevation={props.elevation}>
         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
             <ListSubheader id="challenges-title">Challenges</ListSubheader>
             <List
@@ -26,15 +29,22 @@ function Challenges(props) {
                 }}
                 subheader={<li />}
             >
-                {props.challenges.sort((a, b) => Date.parse(b.time) - Date.parse(a.time)).map((item) => (
+                
+                    <>
                     <ListItem key={`chal-${item.name}`} {...props}>
+                        <Button variant="outlined">View</Button>
+                        {/* {props.auth && <></>} TODO: only show submit with auth enabled */}
+                        <Button sx={{mx:1}} variant="outlined">Submit Photo</Button>
                         <ListItemText primary={`${item.name}`} secondary={`${item.description}`} />
                     </ListItem>
-                ))}
+                    </>
+                
             </List>
 
         </FormControl>
         </Paper>
+        ))}
+        </>
     )
 }
 

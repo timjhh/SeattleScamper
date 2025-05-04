@@ -80,6 +80,7 @@ function Game(props) {
             .catch((err) => {
                 console.log("Error rendering map data " + err);
             });
+            await fetchEndpoint("/team/")
         // await fetchEndpoint("/zones/")
         await fetchEndpoint("/teams/")
         await fetchEndpoint("/challenges/")
@@ -302,7 +303,9 @@ function Game(props) {
                 .then((response) => {
                     return response.json()
                 })
+                
                 .then((data) => {
+                    console.log(data)
                     if(!data || data.length == 0) return;
                     switch (endpoint) {
                         case "/teams/":
@@ -394,52 +397,9 @@ function Game(props) {
                         </svg>
                     </Paper>
                 </Grid2>
-                {props.auth ? (
-                    <Grid2 item size={{ xs: 11, md: 8 }}>
-                        <AuthDisplay
-                            fetchEndpoint={fetchEndpoint}
-                            teams={teams}
-                            challenges={challenges}
-                            postEndpoint={postEndpoint}
-                            drawerOpen={props.drawerOpen}
-                            toggleDrawer={props.toggleDrawer}
-                            myPowerup={myPowerup}
-                            setMyPowerup={setMyPowerup}
-                            myPowerups={myPowerups}
-                            setMyPowerups={setMyPowerups}
-                            fetchEvents={fetchEvents}
-                            updateEvents={updateEvents}
-                            setUpdateEvents={setUpdateEvents}
-                            auth={props.auth}
-                            backend={props.backend}
-                            elevation={elevation}
-                            canton={canton}
-                            setZone={setZone}
-                            zones={zones}
-                            curses={curses}
-                            setCurses={setCurses}
-                        />
-                    </Grid2>
-                ) : (
-                    <>
-                    <Grid2 item size={{ xs: 11, md: 8 }}>
-                        <Paper sx={{ p: 2 }} elevation={elevation}>
-                            <Grid2 container spacing={2}>
-                                <ZoneSelect teams={teams} canton={canton} zones={zones} setZone={setZone} />
-                            </Grid2>
-                        </Paper>
-                    </Grid2>
-                    <Grid2 item size={{ xs: 11, md: 8 }}>
-                        <Paper sx={{ p: 2 }} elevation={elevation}>
-                            <Grid2 container spacing={2}>
-                                
-                            </Grid2>
-                        </Paper>
-                    </Grid2>
-                    </>
-                )}
+
                 <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Challenges elevation={elevation} challenges={challenges} />
+                    <Challenges auth={props.auth} elevation={elevation} challenges={challenges} />
                 </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />

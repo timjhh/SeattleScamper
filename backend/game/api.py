@@ -65,96 +65,46 @@ async def post_challenge(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    return "hia"
-    # challenge_db = db.get(Challenge, challenge.id)
+    challenge_db = db.get(Challenge, challenge.id)
 
-    # if challenge_db is None:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_400_BAD_REQUEST,
-    #         detail="Invalid Challenge ID",
-    #     )
+    if challenge_db is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Challenge ID",
+        )
 
-    # team = current_user.team
+    team = current_user
 
-    # if team is None or team.id is None:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_400_BAD_REQUEST,
-    #         detail="User not in team",
-    #     )
+    if team is None or team.id is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User not in team",
+        )
 
     # canton = db.get(Canton, challenge.canton)
+    challenge = db.get(Challenge, challenge.id)
 
-    # if canton is None:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_400_BAD_REQUEST,
-    #         detail="Invalid Canton ID",
-    #     )
+    if challenge is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Canton ID",
+        )
+    
+    if challenge in team.challenges:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Challenge already submitted",
+        )
 
-    # if not canton.destroyed:
-    #     team.money += challenge_db.money
 
-    #     if challenge_db.levels > 0:
-    #         other_team_id = 1 if team.id == 2 else 2
-    #         other_team = db.get(Team, other_team_id)
+    team_copy = team.model_copy()
+    challenge_copy = challenge.model_copy()
+    team.challenges.append(challenge)
+    db.add(team)
+    db.commit()
+    db.refresh(team)
 
-    #         if canton.team == team:
-    #             canton.level += challenge_db.levels
-    #         elif canton.team is None:
-    #             canton.level += challenge_db.levels
-    #             canton.team = team
-    #         else:
-    #             if canton.level == challenge_db.levels:
-    #                 canton.team = None
-    #             elif canton.level < challenge_db.levels:
-    #                 canton.team = team
-    #             canton.level = abs(canton.level - challenge_db.levels)
-
-    #         canton.level = min(canton.level, 3)
-
-    #         if canton.team:
-    #             canton.team_id = canton.team.id
-    #         else:
-    #             canton.team_id = None
-
-    #         team.income = calculate_passive_income(team)
-    #         team.score = calculate_score(team)
-
-    #         if other_team:
-    #             other_team.income = calculate_passive_income(other_team)
-    #             other_team.score = calculate_score(other_team)
-    #             db.add(other_team)
-    #             db.commit()
-    #             db.refresh(other_team)
-
-    # if team.hand_size == 4:
-    #     team.hand_size = 3
-
-    # if team.challenges > 0:
-    #     team.challenges -= 1
-
-    # event = Event(
-    #     text="Team '{0}' completed the challenge '{1}'".format(
-    #         team.name, challenge_db.name
-    #     ),
-    #     source=team.name,
-    #     time=datetime.now(),
-    # )
-
-    # team_copy = team.model_copy()
-    # canton_copy = canton.model_copy()
-    # db.add(team)
-    # db.commit()
-    # db.refresh(team)
-
-    # db.add(canton)
-    # db.commit()
-    # db.refresh(canton)
-
-    # db.add(event)
-    # db.commit()
-    # db.refresh(event)
-
-    # return {"team": team_copy, "canton": canton_copy}
+    return {"team": team_copy, "challenge": challenge_copy}
 
 @router.get("/game/")
 async def get_game(
@@ -175,7 +125,5 @@ async def send_event(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid team"
         )
-
     text = "({0}) {1}".format(team.team_name, event.text)
-
     new_event(db, text, team.team_name)
