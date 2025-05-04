@@ -8,7 +8,6 @@ import * as d3 from 'd3';
 import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
-import AuthDisplay from "./AuthDisplay.jsx";
 import Score from "./Score.jsx";
 import Events from "./Events.jsx"
 import About from './About.jsx';
@@ -49,9 +48,6 @@ function Game(props) {
     // Player state.
     const [teams, setTeams] = useState({})
 
-    const [myPowerups, setMyPowerups] = useState([])
-    const [myPowerup, setMyPowerup] = useState("")
-
     const [events, setEvents] = useState([]);
 
     const [challenges, setChallenges] = useState([]);
@@ -80,7 +76,8 @@ function Game(props) {
             .catch((err) => {
                 console.log("Error rendering map data " + err);
             });
-            await fetchEndpoint("/team/")
+        await fetchEndpoint("/events/")
+        await fetchEndpoint("/team/")
         // await fetchEndpoint("/zones/")
         await fetchEndpoint("/teams/")
         await fetchEndpoint("/challenges/")
@@ -305,6 +302,7 @@ function Game(props) {
                 })
                 
                 .then((data) => {
+                    console.log(endpoint)
                     console.log(data)
                     if(!data || data.length == 0) return;
                     switch (endpoint) {
@@ -399,7 +397,7 @@ function Game(props) {
                 </Grid2>
 
                 <Grid2 item size={{ xs: 11, md: 8 }}>
-                    <Challenges auth={props.auth} elevation={elevation} challenges={challenges} />
+                    <Challenges postEndpoint={postEndpoint} fetchEndpoint={fetchEndpoint} auth={props.auth} elevation={elevation} challenges={challenges} />
                 </Grid2>
                 <Grid2 item size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />

@@ -15,7 +15,7 @@ var groupBy = function (xs, key) {
 function Score(props) {
     const [score, setScore] = useState({});
     useEffect(() => {
-        if(props.teams.length > 0) {
+        if (props.teams.length > 0) {
             let group = groupBy(props.teams, 'score')
             setScore(group)
         }
@@ -23,31 +23,28 @@ function Score(props) {
 
     function generateSuffix(num) {
         let suffix = "";
-        if(num === 1) suffix="st";
-        if(num === 2) suffix="nd";
-        if(num === 3) suffix="rd";
-        if(num > 3) suffix="th";
+        if (num === 1) suffix = "st";
+        if (num === 2) suffix = "nd";
+        if (num === 3) suffix = "rd";
+        if (num > 3) suffix = "th";
 
         return `${num}${suffix}`
     }
 
     return (
         <>
-        {Object.keys(score).length > 0 && (
-        <Paper sx={{ p: 2 }} elevation={props.elevation}>
-            {Object.keys(score).sort().reverse().map((key,idx) => (
-                <div key={`score${score[key].team_name}-${idx}`}>
-                    <Typography variant="h4" component="div" align="left" sx={{ flexGrow: 1 }}>{generateSuffix((idx+1))} Place:</Typography>
-                    {score[key].map(team => (
-                        <span key={`${idx}tm`}> {team.team_name}&nbsp;
-                        </span>
-                        // <Typography sx={{ color: 'text.secondary'}} variant="h6" component="div" align="left" key={`${idx}ttl`} sx={{ flexGrow: 1 }}>{team.team_name}</Typography>
+            {Object.keys(score).length > 0 && (
+                <Paper sx={{ p: 1 }} elevation={props.elevation}>
+                    {Object.keys(score).sort().reverse().map((key, idx) => (
+                        <div key={`score${score[key].team_name}-${idx}`}>
+                            <Typography variant="h5" component="div" align="left" sx={{ flexGrow: 1, my: 1 }}>{generateSuffix((idx + 1))} Place({key} points):</Typography>
+                            {score[key].map(team => (
+                                <Typography sx={{ color: 'text.secondary' }} component="div" align="left" key={`${Math.random().toString(16).slice(2)}`}>{team.team_name} &nbsp;</Typography>
+                            ))}
+                        </div>
                     ))}
-                    
-                </div>
-            ))}
-        </Paper>
-        )}
+                </Paper>
+            )}
         </>
     )
 }

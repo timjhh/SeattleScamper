@@ -31,7 +31,7 @@ class TeamBase(SQLModel):
 
 class Team(TeamBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    challenges: list["Challenge"] = Relationship(back_populates="team") # pyright:ignore
+    challenges: list["Challenge"] = Relationship(back_populates="team")
 
 
 class TeamPublic(TeamBase, table=True):
@@ -47,9 +47,11 @@ class TeamCreate(TeamBase):
     password: str
 
 class ChallengeBase(SQLModel):
-    id: int | None = Field(default=None, primary_key=True)
+    pass
+   # id: int | None = Field(default=None, primary_key=True)
 
 class Challenge(ChallengeBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
     name: str
     description: str
     points: int = Field(default=1)
@@ -61,7 +63,7 @@ class Challenge(ChallengeBase, table=True):
 
 
 class ChallengePost(ChallengeBase):
-    challenge: int = Field(foreign_key="challenge.id")
+    id: int = Field(foreign_key="challenge.id")
     # Location
 
 class EventBase(SQLModel):

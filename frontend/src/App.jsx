@@ -44,7 +44,7 @@ function App() {
       <Routes>
         <Route path='/' element={
           <ThemeProvider theme={theme}>
-              <AppBar position="sticky">
+              <AppBar position="fied">
                 <Toolbar>
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Seattle Scramble

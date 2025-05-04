@@ -36,7 +36,7 @@ async def read_team_cantons(
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
     if current_user:
-        return current_user
+        return current_user.challenges
     return None
 
 @router.get("/score/")
@@ -65,9 +65,10 @@ async def post_challenge(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    challenge_db = db.get(Challenge, challenge.id)
+    challenge = db.get(Challenge, challenge.id)
+    #challenge = challenge_db.model_copy()
 
-    if challenge_db is None:
+    if challenge is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid Challenge ID",
@@ -81,30 +82,34 @@ async def post_challenge(
             detail="User not in team",
         )
 
-    # canton = db.get(Canton, challenge.canton)
-    challenge = db.get(Challenge, challenge.id)
-
     if challenge is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid Canton ID",
+            detail="Invalid challenge ID",
         )
     
-    if challenge in team.challenges:
+    if challenge in team.challenges and challenge.found and challenge.completed:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Challenge already submitted",
         )
 
 
+    if challenge.found:
+        challenge.completed = True
+        team.score = team.score + challenge.points
+    else:
+        challenge.found = True
+        team.score = team.score + 3
+
     team_copy = team.model_copy()
-    challenge_copy = challenge.model_copy()
     team.challenges.append(challenge)
     db.add(team)
+    db.add(challenge)
     db.commit()
     db.refresh(team)
 
-    return {"team": team_copy, "challenge": challenge_copy}
+    return {"team": team_copy, "challenge": challenge}
 
 @router.get("/game/")
 async def get_game(

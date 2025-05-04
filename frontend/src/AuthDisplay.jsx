@@ -17,9 +17,6 @@ import {
 } from "@mui/material";
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import ZoneSelect from "./ZoneSelect.jsx";
-import challenge from './assets/challengesmall.png'
-import curse from './assets/cursesmall.png'
 
 function AuthDisplay(props) {
 
