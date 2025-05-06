@@ -58,8 +58,10 @@ class Challenge(ChallengeBase, table=True):
     team: Team | None = Relationship(back_populates="challenges")
     team_id: int | None = Field(default=None, foreign_key="team.id")
     neighborhood: str
+    url: str
     found: bool = Field(default=False)
     completed: bool = Field(default=False)
+    failed: bool = Field(default=False)
 
 
 class ChallengePost(ChallengeBase):

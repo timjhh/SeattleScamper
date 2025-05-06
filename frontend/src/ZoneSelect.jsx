@@ -21,7 +21,7 @@ function ZoneSelect(props) {
 
     return (
         <>
-            <Grid2 item size={{ xs: 12, lg: 6 }}>
+            <Grid2 size={{ xs: 12, lg: 6 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Selection">
                     <Autocomplete
                         disablePortal
@@ -44,12 +44,12 @@ function ZoneSelect(props) {
                     />
                 </FormControl>
             </Grid2>
-            <Grid2 item size={{ xs: 6, lg: 3 }}>
+            <Grid2 size={{ xs: 6, lg: 3 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Canton level display">
                     <TextField id="level-textfield" label="Level" defaultValue={props.canton.level} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
                 </FormControl>
             </Grid2>
-            <Grid2 item size={{ xs: 6, lg: 3 }}>
+            <Grid2 size={{ xs: 6, lg: 3 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Canton team display">
                     <TextField id="team-textfield" label="Team" defaultValue={getTeamName(props.canton.team_id)} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
                 </FormControl>

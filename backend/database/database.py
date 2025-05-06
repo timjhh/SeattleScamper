@@ -52,7 +52,7 @@ def load_challenges(engine):
             print(row)
             #points = 0 if row[2] == "" else int(row[2])
             challenges.append(
-                Challenge(name=row[0], description=row[1], points=row[2], neighborhood=row[3])
+                Challenge(name=row[0], description=row[1], points=row[2], neighborhood=row[3], url=row[4])
             )
 
     with Session(engine) as session:
