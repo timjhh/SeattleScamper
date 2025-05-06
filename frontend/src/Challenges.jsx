@@ -118,8 +118,12 @@ function Challenges(props) {
         })
     }
 
-    function handleUploadClick(e) {
-        console.log(e)
+    async function handleUploadClick(e) {
+        await fileInput.current.click()
+        let text = `Are you sure you want to sumit this photo?`
+        if (!window.confirm(text)) {
+          return
+        }
     }
 
     const fileInput = useRef();
@@ -157,7 +161,7 @@ function Challenges(props) {
                                                     </Grid2>
                                                     {!item.completed &&
                                                         <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
-                                                            <Button sx={{ width: 1 }} onClick={() => fileInput.current.click()} variant="outlined" type="submit">Submit Photo</Button>
+                                                            <Button sx={{ width: 1 }} onClick={handleUploadClick} variant="outlined" type="submit">Submit {item.found ? "Challenge" : "Location"}</Button>
                                                             <input
                                                                 ref={fileInput}
                                                                 type="file"
