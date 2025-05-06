@@ -49,78 +49,80 @@ function Challenges(props) {
 
     async function uploadImage(file) {
         return new Promise((resolve, reject) => {
-        // Create a root reference
-        const storage = getStorage(app);
-    
-        // Create file metadata including the content type
-        /** @type {any} */
-        const metadata = {
-          customMetadata: {
-            question: file.question,
-            points: file.points
-          }
-        };
-    
-        if (completedChallenges.includes(file.question)) {
-          let q = file.question.length > 80 ? (file.question.substring(0, 80) + "...") : file.question;
-          let text = `Are you sure you want to overwrite your submission for "${q}"?`
-          if (!window.confirm(text)) {
-            enqueueSnackbar("⚠️ File upload canceled")
-            return
-          }
-        }
-    
-        if ((file.size / 1024 / 1024) > 20) {
-            enqueueSnackbar("⚠️ File size must be < 20MiB")
-            return
-        }
-        //const storageRef = ref(storage, (phone + '/' + file.name));
-        //const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-    
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded.
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    
-            switch (snapshot.state) {
-              case 'paused':
-                console.log('Upload is paused');
-                break;
-              case 'running':
-                // let relProgress = progress / ((1 / files.length))
-                // let totalProgress = (uProgress + relProgress)
-                // setUProgress(totalProgress)
-                // setDialog(`Upload ${totalProgress.toFixed(2)}% Complete`)
-                // setUVariant("info")
-                break;
-              default:
-                console.log('Unknown upload state: ' + snapshot.state)
-                break;
-            }
-          },
-          (error) => {
-            // A full list of error codes is available at
-            // https://firebase.google.com/docs/storage/web/handle-errors
-            console.error(`error: ${error.code} ${error.message}`)
-            // setDialog("Failed to upload submission")
-            // setUVariant("error")
-            // setIsUploading(true);
-            resolve();
-            return
-            
-          },
-          () => {
+            // Create a root reference
+            const storage = getStorage(app);
 
-            resolve();
-          }
-        );
+            // Create file metadata including the content type
+            /** @type {any} */
+            const metadata = {
+                customMetadata: {
+                    question: file.question,
+                    points: file.points
+                }
+            };
+
+            if (completedChallenges.includes(file.question)) {
+                let q = file.question.length > 80 ? (file.question.substring(0, 80) + "...") : file.question;
+                let text = `Are you sure you want to overwrite your submission for "${q}"?`
+                if (!window.confirm(text)) {
+                    enqueueSnackbar("⚠️ File upload canceled")
+                    return
+                }
+            }
+
+            if ((file.size / 1024 / 1024) > 20) {
+                enqueueSnackbar("⚠️ File size must be < 20MiB")
+                return
+            }
+            //const storageRef = ref(storage, (phone + '/' + file.name));
+            //const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded.
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            // let relProgress = progress / ((1 / files.length))
+                            // let totalProgress = (uProgress + relProgress)
+                            // setUProgress(totalProgress)
+                            // setDialog(`Upload ${totalProgress.toFixed(2)}% Complete`)
+                            // setUVariant("info")
+                            break;
+                        default:
+                            console.log('Unknown upload state: ' + snapshot.state)
+                            break;
+                    }
+                },
+                (error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    console.error(`error: ${error.code} ${error.message}`)
+                    // setDialog("Failed to upload submission")
+                    // setUVariant("error")
+                    // setIsUploading(true);
+                    resolve();
+                    return
+
+                },
+                () => {
+
+                    resolve();
+                }
+            );
         })
-      }
+    }
 
     function handleUploadClick(e) {
         console.log(e)
     }
+
+    const fileInput = useRef();
 
     return (
         <>
@@ -151,15 +153,18 @@ function Challenges(props) {
                                                         </ListItem>
                                                     </Grid2>
                                                     <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
-                                                        <Button sx={{width:1}} onClick={() => props.handleShow(item.url)} variant="outlined">View</Button>
+                                                        <Button sx={{ width: 1 }} onClick={() => props.handleShow(item.url)} variant="outlined">View</Button>
                                                     </Grid2>
                                                     {!item.completed &&
-                                                    <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
-                                                        <Button sx={{width:1}} variant="outlined" type="submit">Submit Photo
-                                                        <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }}
-                                                        onChange={event => uploadImage(event.target.files)} />
-                                                        </Button>
-                                                    </Grid2>
+                                                        <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
+                                                            <Button sx={{ width: 1 }} onClick={() => fileInput.current.click()} variant="outlined" type="submit">Submit Photo</Button>
+                                                            <input
+                                                                ref={fileInput}
+                                                                type="file"
+                                                                accept="image/*"
+                                                                style={{ display: 'none' }}
+                                                            />
+                                                        </Grid2>
                                                     }
                                                     <Grid2 item size={{ xs: 12 }}>
                                                         {
