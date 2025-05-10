@@ -10,12 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.806.0",
+    "@aws-sdk/credential-providers": "^3.806.0",
+    "@aws-sdk/s3-request-presigner": "^3.806.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.1",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
     "@mui/styled-engine-sc": "^6.4.3",
+    "aws-sdk": "^2.1692.0",
     "d3": "^7.9.0",
     "js-cookie": "^3.0.5",
     "mate": "^0.21.0",

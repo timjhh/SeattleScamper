@@ -27,12 +27,7 @@ const theme = createTheme({
 
 function App() {
   const backend = import.meta.env.VITE_BACKEND_URL
-  const [auth, setAuth] = useState(null)
-
-  useEffect(() => {
-    let cookie = Cookies.get('authCookie')
-    if(cookie) setAuth(cookie)
-  }, [])
+  const [auth, setAuth] = useState(Cookies.get('authCookie'))
 
   function logout() {
     setAuth(null)

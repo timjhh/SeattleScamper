@@ -37,7 +37,7 @@ function Game(props) {
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,
-      };
+    };
 
 
     // Interactivity for map.
@@ -48,6 +48,7 @@ function Game(props) {
 
     // Player state.
     const [teams, setTeams] = useState({})
+    const [team, setTeam] = useState({});
 
     const [events, setEvents] = useState([]);
     const [challenges, setChallenges] = useState([]);
@@ -70,6 +71,7 @@ function Game(props) {
             .catch((err) => {
                 console.log("Error rendering map data " + err);
             });
+        // await fetchEndpoint("/team/challenges/")
         await fetchEndpoint("/events/")
         await fetchEndpoint("/team/")
         // await fetchEndpoint("/zones/")
@@ -99,7 +101,7 @@ function Game(props) {
             "Leschi": 10,
             "Broadway": 9,
         }
-    
+
 
         d3.selectAll("circle").remove();
 
@@ -108,12 +110,12 @@ function Game(props) {
         let grouped = groupBy(challenges, 'neighborhood');
         Object.keys(grouped).forEach(neigh => {
             let finished = grouped[neigh].filter(c => c.completed).length
-            let uncompleted = grouped[neigh].length-finished;
+            let uncompleted = grouped[neigh].length - finished;
             uncompleted > 0 && createBubbleByNeighborhood(neigh, uncompleted, neighborhoodSizes[neigh]);
         })
     }, [challenges]);
 
-    useInterval(function() {
+    useInterval(function () {
         //fetchEndpoint("/events/")
         //fetchEndpoint("/zones/")
     }, 5000)
@@ -123,18 +125,18 @@ function Game(props) {
 
         // Remember the latest callback.
         useEffect(() => {
-          savedCallback.current = callback;
+            savedCallback.current = callback;
         }, [callback]);
 
         // Set up the interval.
         useEffect(() => {
-          function tick() {
-            savedCallback.current();
-          }
-          if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-          }
+            function tick() {
+                savedCallback.current();
+            }
+            if (delay !== null) {
+                let id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
         }, [delay]);
     }
 
@@ -214,24 +216,24 @@ function Game(props) {
         let bbox = rs.node().getBBox()
 
         let cr = d3.select("#pathsG").select(".zones")
-        .append('g')
-        .attr("class", "mapholder")
-        .attr("transform", function(){return "translate("+(bbox.x + bbox.width/2)+","+(bbox.y + bbox.height/2)+")"})
+            .append('g')
+            .attr("class", "mapholder")
+            .attr("transform", function () { return "translate(" + (bbox.x + bbox.width / 2) + "," + (bbox.y + bbox.height / 2) + ")" })
 
         cr
-        .append("circle")
-          .attr("r", (size*5))
-          .style("fill", "#FFFFFF")
-          .attr("opacity", 0.5)
-          .attr("stroke", "black")
-          .attr("stroke-width", 1)
-          .attr("fill-opacity", .4)
+            .append("circle")
+            .attr("r", (size * 5))
+            .style("fill", "#FFFFFF")
+            .attr("opacity", 0.5)
+            .attr("stroke", "black")
+            .attr("stroke-width", 1)
+            .attr("fill-opacity", .4)
         cr.append("text")
-        .attr("dx", -5)
-        .attr("dy", 5)
-        .text(count)
+            .attr("dx", -5)
+            .attr("dy", 5)
+            .text(count)
     }
-      
+
 
     function updateSelected(selected) {
         var g = d3.select("#pathsG").select(".zones").selectAll("g");
@@ -250,33 +252,33 @@ function Game(props) {
         }
     }
 
-    function updateColors() {
-        var g = d3.select("#pathsG").select(".zones").selectAll("g");
-        g.selectAll("path")
-            .transition()
-            .duration(200)
-            .attr("fill", (d) => getColorForZone(d.properties.name, false))
-            .attr("stroke-width", "0.1px");
-    }
+    // function updateColors() {
+    //     var g = d3.select("#pathsG").select(".zones").selectAll("g");
+    //     g.selectAll("path")
+    //         .transition()
+    //         .duration(200)
+    //         .attr("fill", (d) => getColorForZone(d.properties.name, false))
+    //         .attr("stroke-width", "0.1px");
+    // }
 
-    function getColorForZone(value, faded) {
-        let item = zones.find(e => e.name === value)
-        return getColor(item, faded)
-    }
+    // function getColorForZone(value, faded) {
+    //     let item = zones.find(e => e.name === value)
+    //     return getColor(item, faded)
+    // }
 
     async function fetchEvents() {
         //await fetchEndpoint("/teams/")
         // await fetchEndpoint("/zones/")
     }
 
-    const objectsEqual = (o1, o2) => 
-        typeof o1 === 'object' && Object.keys(o1).length > 0 
-            ? Object.keys(o1).length === Object.keys(o2).length 
-                && Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+    const objectsEqual = (o1, o2) =>
+        typeof o1 === 'object' && Object.keys(o1).length > 0
+            ? Object.keys(o1).length === Object.keys(o2).length
+            && Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
             : o1 === o2;
 
 
-    const arraysEqual = (a1, a2) => 
+    const arraysEqual = (a1, a2) =>
         a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
 
 
@@ -297,13 +299,18 @@ function Game(props) {
                     return response.json()
                 })
                 .then((data) => {
-                    if(!data || data.length == 0) {
+                    if (!data || data.length == 0) {
                         resolve();
                         return;
-                    } 
+                    }
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
+
+                            break;
+                        case "/team/":
+                            setTeam(data)
+                            console.log(data)
                             break;
                         case "/events/":
                             // Only update the events if something has actually changed.
@@ -313,12 +320,17 @@ function Game(props) {
                             break;
                         case "/zones/": {
                             // Only update zones if they have changed.
-                            if(!arraysEqual(data.sort((a,b) => a.name < b.name), zones.sort((a,b) => a.name < b.name))) {
+                            if (!arraysEqual(data.sort((a, b) => a.name < b.name), zones.sort((a, b) => a.name < b.name))) {
                                 setZones(data)
                             }
                             break;
                         }
+                        case "/team/challenges/":
+                            console.log(data)
+
+                            break;
                         case "/challenges/":
+
                             setChallenges(data)
                             break;
                         default:
@@ -386,9 +398,9 @@ function Game(props) {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-                >
+            >
                 <Box sx={style}>
-                    <img display="block" className="modalimg" src={currentURL}/>
+                    <img display="block" className="modalimg" src={currentURL} />
                 </Box>
             </Modal>
 
@@ -402,13 +414,14 @@ function Game(props) {
 
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Challenges
-                     postEndpoint={postEndpoint} 
-                     fetchEndpoint={fetchEndpoint} 
-                     auth={props.auth} 
-                     elevation={elevation} 
-                     challenges={challenges}
-                     handleShow={handleShow}
-                     setCurrentURL={setCurrentURL} />
+                        team={team}
+                        postEndpoint={postEndpoint}
+                        fetchEndpoint={fetchEndpoint}
+                        auth={props.auth}
+                        elevation={elevation}
+                        challenges={challenges}
+                        handleShow={handleShow}
+                        setCurrentURL={setCurrentURL} />
                 </Grid2>
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
