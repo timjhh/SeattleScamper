@@ -2,6 +2,8 @@
 import {
     Paper,
     Typography,
+    Grid2,
+    Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -21,28 +23,26 @@ function Score(props) {
         }
     }, [props.teams])
 
-    function generateSuffix(num) {
-        let suffix = "";
-        if (num === 1) suffix = "st";
-        if (num === 2) suffix = "nd";
-        if (num === 3) suffix = "rd";
-        if (num > 3) suffix = "th";
-
-        return `${num}${suffix}`
-    }
-
     return (
         <>
             {Object.keys(score).length > 0 && (
                 <Paper sx={{ p: 1 }} elevation={props.elevation}>
+                    <Typography sx={{mb: 2}} variant="h4" component="div" align="center">Score</Typography>
+                    <Grid2 container direction="row" spacing={2}>
                     {Object.keys(score).sort().reverse().map((key, idx) => (
-                        <div key={`score${score[key].team_name}-${idx}`}>
-                            <Typography variant="h5" component="div" align="left" sx={{ flexGrow: 1, my: 1 }}>{generateSuffix((idx + 1))} Place({key} points):</Typography>
+                        <>
+                            <Grid2 item size={{xs: 3}}>
+                            <Typography variant="h4" component="div" align="center" sx={{ color: 'text.secondary' }}>{idx + 1} </Typography>
+                            </Grid2>
+                            <Grid2 item size={{xs: 9}}>
+                            {key} points
                             {score[key].map(team => (
-                                <Typography sx={{ color: 'text.secondary' }} component="div" align="left" key={`${Math.random().toString(16).slice(2)}`}>{team.team_name} &nbsp;</Typography>
+                                <Typography sx={{ color: 'text.secondary' }} key={`${Math.random().toString(16).slice(2)}`}>➡️{team.team_name} &nbsp;</Typography>
                             ))}
-                        </div>
+                            </Grid2>
+                        </>
                     ))}
+                    </Grid2>
                 </Paper>
             )}
         </>

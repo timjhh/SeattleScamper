@@ -46,7 +46,6 @@ function Challenges(props) {
         var s3 = new S3Client({
         //apiVersion: "2006-03-01",
         region: region,
-
         requestChecksumCalculation: 'WHEN_REQUIRED'
         });
 
@@ -64,9 +63,9 @@ function Challenges(props) {
         let res = await s3.send(cmd);
         console.log(res)
 
-        // await props.postEndpoint("/challenge/", JSON.stringify({
-        //     id: c.id,
-        // }))
+        await props.postEndpoint("/challenge/", JSON.stringify({
+            id: c.id,
+        }))
 
 
         await props.fetchEndpoint("/challenges/")

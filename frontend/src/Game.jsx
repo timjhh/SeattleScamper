@@ -3,6 +3,7 @@ import {
     Grid2,
     Box,
     Modal,
+    Typography,
     Paper,
 } from "@mui/material";
 import * as d3 from 'd3';
@@ -411,6 +412,39 @@ function Game(props) {
                         </svg>
                     </Paper>
                 </Grid2>
+
+                <Grid2 size={{ xs: 11, md: 8 }}>
+                    <Paper sx={{ p: 1 }} elevation={elevation}>
+                        <Typography sx={{ textAlign: 'center' }} variant="h5">{team.team_name}</Typography>
+                        <Grid2 justifyContent={'space-evenly'} sx={{ textAlign: 'center' }} container direction="row" spacing={2}>
+                            <Grid2 item size={{ sx: 6 }}>
+                                <Typography variant="h4">Score</Typography>
+                                <Typography variant="h4">{team.score}</Typography>
+                            </Grid2>
+                            <Grid2 item size={{ sx: 6 }}>
+                                <Typography variant="h4">Rank</Typography>
+                                <Typography variant="h4">TODO</Typography>
+                            </Grid2>
+                            {/* {Object.keys(score).sort().reverse().map((key, idx) => (
+                            <>
+                                <Grid2 item size={{xs: 3}}>
+                                <Typography variant="h4" component="div" align="center" sx={{ color: 'text.secondary' }}>{idx + 1} </Typography>
+                                </Grid2>
+                                <Grid2 item size={{xs: 9}}>
+                                {key} points
+                                {score[key].map(team => (
+                                    <Typography sx={{ color: 'text.secondary' }} key={`${Math.random().toString(16).slice(2)}`}>➡️{team.team_name} &nbsp;</Typography>
+                                ))}
+                                </Grid2>
+                            </>
+                        ))} */}
+                        </Grid2>
+                    </Paper>
+                </Grid2>
+
+
+
+
 
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Challenges
