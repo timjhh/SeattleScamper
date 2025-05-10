@@ -20,7 +20,6 @@ import Challenges from "./Challenges.jsx";
 
 function Game(props) {
     const elevation = 5;
-    const destroyed = "oklch(0% 0 300)";
     // image view modal toggles.
     const [show, setShow] = useState(false);
     const [currentURL, setCurrentURL] = useState("")
@@ -50,6 +49,7 @@ function Game(props) {
     // Player state.
     const [teams, setTeams] = useState({})
     const [team, setTeam] = useState({});
+    const [rank, setRank] = useState(0)
 
     const [events, setEvents] = useState([]);
     const [challenges, setChallenges] = useState([]);
@@ -72,7 +72,7 @@ function Game(props) {
             .catch((err) => {
                 console.log("Error rendering map data " + err);
             });
-        // await fetchEndpoint("/team/challenges/")
+        await fetchEndpoint("/team/challenges/")
         await fetchEndpoint("/events/")
         await fetchEndpoint("/team/")
         // await fetchEndpoint("/zones/")
@@ -161,7 +161,7 @@ function Game(props) {
             .attr("viewBox", [0, 0, width, height])
             .attr("width", "100%")
             .attr("height", "50vh")
-            .attr("style", "max-width: 100%; text-align: center;")
+            .attr("style", "max-width: 100%; text-align: center; background-color: oklch(0.9 0.0666 210.71 / 30%)")
 
         let g = svg
             .append("g")
@@ -279,10 +279,7 @@ function Game(props) {
             : o1 === o2;
 
 
-    const arraysEqual = (a1, a2) =>
-        a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
-
-
+    const arraysEqual = (a1, a2) => a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
 
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
@@ -306,18 +303,18 @@ function Game(props) {
                     }
                     switch (endpoint) {
                         case "/teams/":
+                            console.log(data)
                             setTeams(data)
-
                             break;
                         case "/team/":
                             setTeam(data)
                             console.log(data)
                             break;
                         case "/events/":
-                            // Only update the events if something has actually changed.
-                            // if((Math.max(...data.map(o => o.id)) !== Math.max(...events.map(o => o.id))) || events.length === 0) {
-                            //     setEvents(data)
-                            // }
+                            //Only update the events if something has actually changed.
+                            if((Math.max(...data.map(o => o.id)) !== Math.max(...events.map(o => o.id))) || events.length === 0) {
+                                setEvents(data)
+                            }
                             break;
                         case "/zones/": {
                             // Only update zones if they have changed.
@@ -328,10 +325,9 @@ function Game(props) {
                         }
                         case "/team/challenges/":
                             console.log(data)
-
                             break;
                         case "/challenges/":
-
+                            console.log(data)
                             setChallenges(data)
                             break;
                         default:
@@ -423,29 +419,11 @@ function Game(props) {
                             </Grid2>
                             <Grid2 item size={{ sx: 6 }}>
                                 <Typography variant="h4">Rank</Typography>
-                                <Typography variant="h4">TODO</Typography>
+                                <Typography variant="h4">{rank}</Typography>
                             </Grid2>
-                            {/* {Object.keys(score).sort().reverse().map((key, idx) => (
-                            <>
-                                <Grid2 item size={{xs: 3}}>
-                                <Typography variant="h4" component="div" align="center" sx={{ color: 'text.secondary' }}>{idx + 1} </Typography>
-                                </Grid2>
-                                <Grid2 item size={{xs: 9}}>
-                                {key} points
-                                {score[key].map(team => (
-                                    <Typography sx={{ color: 'text.secondary' }} key={`${Math.random().toString(16).slice(2)}`}>➡️{team.team_name} &nbsp;</Typography>
-                                ))}
-                                </Grid2>
-                            </>
-                        ))} */}
                         </Grid2>
                     </Paper>
                 </Grid2>
-
-
-
-
-
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Challenges
                         team={team}
@@ -466,7 +444,7 @@ function Game(props) {
                     </Grid2>
                 }
                 <Grid2 size={{ xs: 11, md: 8 }}>
-                    <Score teams={teams} elevation={elevation} zones={zones} />
+                    <Score team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
                 </Grid2>
                 {/* <Grid2 size={{ xs: 11, md: 8 }}>
                     <About elevation={elevation} />

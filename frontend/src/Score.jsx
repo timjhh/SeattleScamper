@@ -3,7 +3,6 @@ import {
     Paper,
     Typography,
     Grid2,
-    Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -20,7 +19,10 @@ function Score(props) {
         if (props.teams.length > 0) {
             let group = groupBy(props.teams, 'score')
             setScore(group)
+            // I'm sorry.
+            props.setRank(Object.keys(group).sort().reverse().indexOf(props.team.score.toString())+1)
         }
+        
     }, [props.teams])
 
     return (
