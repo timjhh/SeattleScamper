@@ -17,6 +17,7 @@ import Score from "./Score.jsx";
 import Events from "./Events.jsx"
 import Message from "./Message.jsx";
 import Challenges from "./Challenges.jsx";
+import About from "./About.jsx";
 
 function Game(props) {
     const elevation = 5;
@@ -31,13 +32,11 @@ function Game(props) {
     }
 
     const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        border: '1px solid #000',
-        boxShadow: 24,
+        transform: 'translate(0, 50%)',
+        margin: 'auto',
+        display: 'block',
+        width: '80%',
+        maxWidth: '100vw',
     };
 
 
@@ -58,7 +57,7 @@ function Game(props) {
 
     // Fetch all data on initial map load.
     useEffect(() => {
-        if (!mapLoaded) {
+        if (!mapLoaded && props.auth) {
             makeGame()
         }
     }, []);
@@ -99,6 +98,7 @@ function Game(props) {
     }
 
     useEffect(() => {
+        if(challenges.length === 0) return;
         const neighborhoodSizes = {
             "Roosevelt": 5,
             "Ravenna": 8,
@@ -300,6 +300,10 @@ function Game(props) {
                         resolve();
                         return;
                     }
+                    if(data.detail) {
+                        resolve();
+                        return
+                    }
                     switch (endpoint) {
                         case "/teams/":
                             setTeams(data)
@@ -396,8 +400,10 @@ function Game(props) {
                     <img display="block" className="modalimg" src={currentURL} />
                 </Box>
             </Modal>
-
+            
             <Grid2 sx={{ my: 2 }} spacing={2} container direction="column" alignItems={"center"} justifyContent={"center"}>
+            {props.auth && (
+                <>
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
                         <svg display="flex" id="travelmap">
@@ -435,6 +441,8 @@ function Game(props) {
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
+                </>
+            )}
                 {props.auth && team.username === "timjhh" &&
                     <Grid2 size={{ xs: 11, md: 8 }}>
                         <Message elevation={elevation} postEndpoint={postEndpoint} />
@@ -443,10 +451,12 @@ function Game(props) {
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Score team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
                 </Grid2>
-                {/* <Grid2 size={{ xs: 11, md: 8 }}>
+            
+                <Grid2 size={{ xs: 11, md: 8 }}>
                     <About elevation={elevation} />
-                </Grid2> */}
+                </Grid2>
             </Grid2>
+
         </>
     );
 }

@@ -154,10 +154,6 @@ function Challenges(props) {
                                             item.name === challenge.name && 
                                             uProgress > 0 &&
                                             <LinearProgress variant="determinate" value={uProgress} />}
-                                            {/* <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                                                {getChallenge(item.id)?.found && <Typography>✅</Typography>}
-                                                {getChallenge(item.id)?.completed && <Typography>✅</Typography>}
-                                            </Box> */}
                                             <Box sx={{ position: 'relative' }}>
                                                 {getChallenge(item.id)?.found && (
                                                     <Typography sx={{ position: 'absolute', top: 0, left: 20 }}>✅</Typography>
@@ -178,7 +174,7 @@ function Challenges(props) {
                                                     </ListItem>
                                                 </Grid2>
                                                 <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
-                                                    <Button sx={{ width: 1 }} onClick={() => props.handleShow(`${BASE_URL}/challenges/${sanitize(item.name)}.jpeg`)} variant="outlined">View</Button>
+                                                    <Button sx={{ width: 1 }} onClick={() => props.handleShow(`${BASE_URL}/challenges/${sanitize(item.name)}.jpg`)} variant="outlined">View</Button>
                                                 </Grid2>
                                                 {getChallenge(item.id)?.completed ? (
                                                         <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
