@@ -19,7 +19,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
 import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
@@ -30,7 +30,7 @@ function Challenges(props) {
     const bucketName = "seattle-scramble";
     const region = "us-west-2";
     const BASE_URL = "https://seattle-scramble.s3.us-west-2.amazonaws.com"
-    const [s3, setS3] = useState(new S3Client({
+    const [s3, _] = useState(new S3Client({
         requestHandler: new XhrHttpHandler({}),
         region: region,
         requestChecksumCalculation: 'WHEN_REQUIRED'
@@ -177,7 +177,7 @@ function Challenges(props) {
                                                             )}
                                                     </ListItem>
                                                 </Grid2>
-                                                <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
+                                                <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                     <Button sx={{ width: 1 }} onClick={() => props.handleShow(`${BASE_URL}/challenges/${sanitize(item.name)}.jpeg`)} variant="outlined">View</Button>
                                                 </Grid2>
                                                 {getChallenge(item.id)?.completed ? (
@@ -194,7 +194,7 @@ function Challenges(props) {
                                                             </Button>
                                                         </Grid2>
                                                     ) 
-                                                    : (<Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
+                                                    : (<Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                         <Button sx={{ width: 1 }}
                                                             onClick={() => { setChallenge(item);fileInput.current?.click() }}
                                                             variant="outlined"

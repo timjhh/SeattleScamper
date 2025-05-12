@@ -108,6 +108,15 @@ function Game(props) {
             "Montlake": 8,
             "Leschi": 10,
             "Broadway": 9,
+            "Belltown": 6,
+            "InternationalDistrict": 5,
+            "FirstHill": 5,
+            "Pike-Market": 3,
+            "CentralBusinessDistrict": 5,
+            "LowerQueenAnne": 6,
+            "SouthLakeUnion": 8,
+            "Fremont": 8,
+            "default": 10,
         }
 
 
@@ -119,7 +128,7 @@ function Game(props) {
         Object.keys(grouped).forEach(neigh => {
             let finished = grouped[neigh].filter(c => getChallenge(c.id)?.completed).length
             let uncompleted = grouped[neigh].length - finished;
-            uncompleted > 0 && createBubbleByNeighborhood(neigh, uncompleted, neighborhoodSizes[neigh]);
+            uncompleted > 0 && createBubbleByNeighborhood(neigh, uncompleted, neighborhoodSizes[neigh] ? neighborhoodSizes[neigh] : neighborhoodSizes['default']);
         })
     }, [challenges]);
 
