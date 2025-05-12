@@ -26,34 +26,50 @@ function Challenges(props) {
     const [hideCompleted, setHideCompleted] = useState(false);
     const [uProgress, setUProgress] = useState(0)
     const [challenge, setChallenge] = useState(null)
+    //var IdentityPoolId = "IDENTITY_POOL_ID";
+    const bucketName = "seattle-scramble";
+    const region = "us-west-2";
+    const BASE_URL = "https://seattle-scramble.s3.us-west-2.amazonaws.com"
+    const [s3, setS3] = useState(new S3Client({
+        requestHandler: new XhrHttpHandler({}),
+        region: region,
+        requestChecksumCalculation: 'WHEN_REQUIRED'
+    }))
+
+    const FOUND_STAGE = 'findme'
+    const CHALLENGE_STAGE = 'challenge'
+
 
     function handleHideCompleted(e) {
         setHideCompleted(e.target.checked)
     }
 
     function sanitize(input) {
-        return input.replaceAll(/\s|\\/g, "")
+        return input?.replaceAll(/\s|\\/g, "")
     }
+
+    // async function listChallenges() {
+    //     const input = {
+    //         Bucket: bucketName,
+    //         Prefix: `${sanitize(props.team.team_name)}/`
+    //       };
+    //       const command = new ListObjectsCommand(input);
+    //       const response = await s3.send(command);
+    //       console.log(response)
+    // }
+
+    // useEffect(() => {
+    //     // 
+    //     listChallenges()
+    // }, [props.team])
 
     async function handleSubmitChallenge(file) {
         if (!challenge.id) {
             enqueueSnackbar("Invalid Challenge", { variant: "error", autoHideDuration: 3000 })
             return
         }
-
-        enqueueSnackbar("Success", { variant: "success", autoHideDuration: 3000 })
-        var bucketName = "seattle-scramble";
-        var region = "us-west-2";
-        //var IdentityPoolId = "IDENTITY_POOL_ID";
-
-        var s3 = new S3Client({
-            requestHandler: new XhrHttpHandler({}),
-            region: region,
-
-            requestChecksumCalculation: 'WHEN_REQUIRED'
-        });
         try {
-            let stage = challenge.found ? "challenge" : "findme"
+            let stage = challenge.found ? CHALLENGE_STAGE : FOUND_STAGE
             const upload = new Upload({
                 client: s3,
                 params: {
@@ -75,6 +91,7 @@ function Challenges(props) {
             }))
             await props.fetchEndpoint("/challenges/")
             await props.fetchEndpoint("/team/")
+            await props.fetchEndpoint("/team/challenges/")
         } catch(err) {
             if (err instanceof Error && err.name === "AbortError") {
                 enqueueSnackbar(`Multipart upload was aborted. ${err.message}`, { variant: "error", autoHideDuration: 3000 })
@@ -110,9 +127,14 @@ function Challenges(props) {
 
     const fileInput = useRef();
 
+    // getChallenge returns a challenge's state given its id.
+    function getChallenge(id) {
+        return props.teamChallenges.find(c=>c.challenge_id===id)
+    }
+
     return (
         <>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ mb: 1, display: 'flex', justifyContent: 'space-between' }}>
                 <ListSubheader id="challenges-title">Challenges</ListSubheader>
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <ListSubheader sx={{ p: 0 }} id="challenges-title">Hide Completed</ListSubheader>
@@ -122,53 +144,74 @@ function Challenges(props) {
             <Grid2 container direction="row" spacing={2}>
                 {props.challenges.map((item) => (
                     <>
-                        {hideCompleted && item.completed ?
+                        {hideCompleted && getChallenge(item.id)?.completed ?
                             (<></>)
                             : (
                                 <Grid2 size={{ xs: 12, md: 6 }}>
-                                    <Paper sx={{ my: 1 }} elevation={props.elevation}>
-
+                                    <Paper elevation={props.elevation}>
                                         <FormControl aria-label="Challenge selection" sx={{ width: "100%" }}>
                                             {challenge && 
                                             item.name === challenge.name && 
                                             uProgress > 0 &&
                                             <LinearProgress variant="determinate" value={uProgress} />}
-                                            <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                                                {item.found && <Typography>✅</Typography>}
-                                                {item.completed && <Typography>✅</Typography>}
+                                            {/* <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                                                {getChallenge(item.id)?.found && <Typography>✅</Typography>}
+                                                {getChallenge(item.id)?.completed && <Typography>✅</Typography>}
+                                            </Box> */}
+                                            <Box sx={{ position: 'relative' }}>
+                                                {getChallenge(item.id)?.found && (
+                                                    <Typography sx={{ position: 'absolute', top: 0, left: 20 }}>✅</Typography>
+                                                    )}
+                                                    {getChallenge(item.id)?.completed && (
+                                                    <Typography sx={{ position: 'absolute', top: 0 }}>✅</Typography>
+                                                    )}
                                             </Box>
-                                            <List sx={{ p: 0 }}>
-                                                <Grid2 container direction="row">
-                                                    <Grid2 item size={{ xs: 12, md: 6 }} sx={{ p: 1 }}>
-                                                        <ListItem key={`chal-${item.name}`}>
-                                                            {item.found ? (
-                                                                <ListItemText primary={`${item.name}`} secondary={`${item.description} (${item.points} Points)`} />
-                                                            )
-                                                                : (
-                                                                    <ListItemText primary={`${item.name}`} secondary={"This challenge will be revealed on site visit."} />
-                                                                )}
-                                                        </ListItem>
-                                                    </Grid2>
-                                                    <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
-                                                        <Button sx={{ width: 1 }} onClick={() => props.handleShow(`https://seattle-scramble.s3.us-west-2.amazonaws.com/challenges/${sanitize(item.name)}.jpeg`)} variant="outlined">View</Button>
-                                                    </Grid2>
-                                                    {!item.completed &&
-                                                        <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
-                                                            <Button sx={{ width: 1 }}
-                                                                onClick={() => { setChallenge(item);fileInput.current?.click() }}
-                                                                variant="outlined"
-                                                                type="submit">Submit {item.found ? "Challenge" : "Location"}</Button>
-                                                            <input
-                                                                ref={fileInput}
-                                                                type="file"
-                                                                accept="image/*"
-                                                                onChange={(e) => handleUploadClick(e, item)}
-                                                                style={{ display: 'none' }}
-                                                            />
-                                                        </Grid2>
-                                                    }
+                                            <Grid2 container direction="row">
+                                                <Grid2 item size={{ xs: 12, md: 6 }} sx={{ p: 1 }}>
+                                                    <ListItem key={`chal-${item.name}`}>
+                                                        {getChallenge(item.id)?.found ? (
+                                                            <ListItemText primary={`${item.name}`} secondary={`${item.description} (${item.points} Points)`} />
+                                                        )
+                                                            : (
+                                                                <ListItemText primary={`${item.name}`} secondary={"This challenge will be revealed on site visit."} />
+                                                            )}
+                                                    </ListItem>
                                                 </Grid2>
-                                            </List>
+                                                <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
+                                                    <Button sx={{ width: 1 }} onClick={() => props.handleShow(`${BASE_URL}/challenges/${sanitize(item.name)}.jpeg`)} variant="outlined">View</Button>
+                                                </Grid2>
+                                                {getChallenge(item.id)?.completed ? (
+                                                        <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                            <Button sx={{ width: 1, mr:1 }}
+                                                                onClick={() => props.handleShow(`${BASE_URL}/${sanitize(props.team.team_name)}/${sanitize(item.name)}_${FOUND_STAGE}`)}
+                                                                variant="outlined"
+                                                                type="submit">View Submission
+                                                            </Button>
+                                                            <Button sx={{ width: 1, ml:1 }}
+                                                                onClick={() => props.handleShow(`${BASE_URL}/${sanitize(props.team.team_name)}/${sanitize(item.name)}_${CHALLENGE_STAGE}`)}
+                                                                variant="outlined"
+                                                                type="submit">View Challenge Submission
+                                                            </Button>
+                                                        </Grid2>
+                                                    ) 
+                                                    : (<Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 3 }}>
+                                                        <Button sx={{ width: 1 }}
+                                                            onClick={() => { setChallenge(item);fileInput.current?.click() }}
+                                                            variant="outlined"
+                                                            type="submit">Submit {getChallenge(item.id)?.found ? "Challenge" : "Location"}
+                                                        </Button>
+                                                        <input
+                                                            ref={fileInput}
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={(e) => handleUploadClick(e, item)}
+                                                            style={{ display: 'none' }}
+                                                        />
+                                                    </Grid2>
+                                                    )
+                                                }
+                                            </Grid2>
+
                                         </FormControl>
                                     </Paper>
                                 </Grid2>

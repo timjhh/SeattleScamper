@@ -20,9 +20,8 @@ function Score(props) {
             let group = groupBy(props.teams, 'score')
             setScore(group)
             // I'm sorry.
-            props.setRank(Object.keys(group).sort().reverse().indexOf(props.team.score.toString())+1)
+            props.setRank(Object.keys(group).sort().reverse().indexOf(props.team.score?.toString())+1)
         }
-        
     }, [props.teams])
 
     return (

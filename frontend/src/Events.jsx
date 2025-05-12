@@ -14,15 +14,6 @@ function Events(props) {
         props.fetchEvents()
     }, [props.updateEvents])
 
-    function getEventEmoji(text) {
-        if(text.includes("completed the challenge")) return "🏆"
-        if(text.includes(" entered ")) return "🚂"
-        if(text.includes(" a curse")) return "👺"
-        if(text.includes("power up")) return "⚡"
-        if(text.includes("paid a toll")) return "🛃"
-        if(text.includes("passive income")) return "📈"
-        if(text.includes(" destroyed ")) return "💣"
-    }
 
     return (
         <Paper elevation={props.elevation}>
@@ -40,7 +31,7 @@ function Events(props) {
                 <ListSubheader id="events-title">Announcements</ListSubheader>
                 {props.events.sort((a,b) => Date.parse(b.time) - Date.parse(a.time)).map((item) => (
                     <ListItem id={`itemid-${item.id}-${item.time}`} key={`item-${item.id}-${item.time}`}>
-                        <ListItemText primary={<b>{item.text} {getEventEmoji(item.text)}</b>} secondary={`${new Date(item.time).toLocaleString()}`} />
+                        <ListItemText primary={<b>{item.text}</b>} secondary={`${new Date(item.time).toLocaleString()}`} />
                     </ListItem>
                 ))}
             </List>

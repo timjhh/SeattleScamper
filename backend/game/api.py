@@ -15,7 +15,7 @@ from ..database.models import (
 
     Challenge,
     ChallengePost,
-
+    TeamChallengeLink,
     Event,
     EventPost,
     Team,
@@ -23,6 +23,9 @@ from ..database.models import (
 )
 from ..auth import auth
 router = APIRouter()
+
+POINTS_FOR_FIND = 3
+
 
 @router.get("/team/")
 async def read_team(
@@ -32,12 +35,27 @@ async def read_team(
 
 
 @router.get("/team/challenges/")
-async def read_team_cantons(
+async def read_team_challenges(
+    db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
+    
+    if not current_user or not current_user.id:
+        # This should ideally be caught by auth.get_current_user raising an error
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not authenticate team.",
+        )
+
     if current_user:
-        return current_user.challenges
-    return None
+        statement = select(TeamChallengeLink).where(TeamChallengeLink.team_id == current_user.id)
+
+        team_challenges = db.exec(statement).all()
+        if not team_challenges:
+            return []
+        return team_challenges
+
+    return []
 
 @router.get("/score/")
 async def read_teams(db: SessionDep):
@@ -65,15 +83,6 @@ async def post_challenge(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    challenge = db.get(Challenge, challenge.id)
-    #challenge = challenge_db.model_copy()
-
-    if challenge is None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid Challenge ID",
-        )
-
     team = current_user
 
     if team is None or team.id is None:
@@ -81,35 +90,59 @@ async def post_challenge(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="User not in team",
         )
-
+    
+    challenge = db.get(Challenge, challenge.id)
     if challenge is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid challenge ID",
-        )
-    
-    if challenge in team.challenges and challenge.found and challenge.completed:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Challenge already submitted",
+            detail="Invalid Challenge ID",
         )
 
+    query = select(TeamChallengeLink).where(TeamChallengeLink.team_id == team.id, TeamChallengeLink.challenge_id == challenge.id)
+    team_challenge_link = db.exec(query).first()
 
-    if challenge.found:
-        challenge.completed = True
-        team.score = team.score + challenge.points
+    if team_challenge_link:
+        # Link exists, check its state
+        if team_challenge_link.completed:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Challenge already completed by this team.",
+            )
+        
+        # If it was found but not completed, now mark as completed
+        if team_challenge_link.found and not team_challenge_link.completed:
+            team_challenge_link.completed = True
+            team.score += challenge.points # Add challenge's specific points
+        # else if found is False (should not happen if link exists from previous logic, but as a safeguard)
+        elif not team_challenge_link.found:
+            team_challenge_link.found = True
+            team_challenge_link.completed = False
+            team.score += POINTS_FOR_FIND
+
+        db.add(team_challenge_link)
+        db.add(team)
+        db.commit()
+        db.refresh(team_challenge_link)
+        db.refresh(team)
+        return team_challenge_link
+
+
     else:
-        challenge.found = True
-        team.score = team.score + 3
+        # No link exists, this is the first interaction ("finding" it)
+        new_link = TeamChallengeLink(
+            team_id=team.id,
+            challenge_id=challenge.id,
+            found=True,
+            completed=False,
+        )
+        team.score += POINTS_FOR_FIND
 
-    team_copy = team.model_copy()
-    team.challenges.append(challenge)
-    db.add(team)
-    db.add(challenge)
-    db.commit()
-    db.refresh(team)
-
-    return {"team": team_copy, "challenge": challenge}
+        db.add(new_link)
+        db.add(team) # Add team to persist score change
+        db.commit()
+        db.refresh(new_link)
+        db.refresh(team)
+        return new_link
 
 @router.get("/game/")
 async def get_game(

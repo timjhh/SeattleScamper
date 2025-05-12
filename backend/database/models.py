@@ -32,14 +32,12 @@ class TeamBase(SQLModel):
 class TeamChallengeLink(SQLModel, table=True):
     team_id: int = Field(foreign_key="team.id", primary_key=True)
     challenge_id: int = Field(foreign_key="challenge.id", primary_key=True)
-
-
+    found: bool = Field(default=False)
+    completed: bool = Field(default=False)
 
 class Team(TeamBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     challenges: list["Challenge"] = Relationship(link_model=TeamChallengeLink)
-
-
 
 class TeamPublic(TeamBase):
     id: int | None = Field(default=None, primary_key=True)
@@ -60,13 +58,8 @@ class Challenge(ChallengeBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
     description: str
-    points: int = Field(default=1)
     neighborhood: str
-    found: bool = Field(default=False)
-    completed: bool = Field(default=False)
-    failed: bool = Field(default=False)
-
-
+    points: int = Field(default=1)
 
 class ChallengePost(ChallengeBase):
     id: int = Field(foreign_key="team.id")

@@ -25,6 +25,7 @@ function Game(props) {
     const [currentURL, setCurrentURL] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = (u) => {
+        console.log(u)
         setShow(true)
         setCurrentURL(u)
     }
@@ -53,6 +54,7 @@ function Game(props) {
 
     const [events, setEvents] = useState([]);
     const [challenges, setChallenges] = useState([]);
+    const [teamChallenges, setTeamChallenges] = useState([])
 
     // Fetch all data on initial map load.
     useEffect(() => {
@@ -91,6 +93,11 @@ function Game(props) {
     //     updateColors(zones)
     // }, [zones])
 
+    // getChallenge returns a challenge's state given its id.
+    function getChallenge(id) {
+        return teamChallenges.find(c=>c.challenge_id===id)
+    }
+
     useEffect(() => {
         const neighborhoodSizes = {
             "Roosevelt": 5,
@@ -110,7 +117,7 @@ function Game(props) {
         // Once grouped, display the number of challenges in each neighborhood.
         let grouped = groupBy(challenges, 'neighborhood');
         Object.keys(grouped).forEach(neigh => {
-            let finished = grouped[neigh].filter(c => c.completed).length
+            let finished = grouped[neigh].filter(c => getChallenge(c.id)?.completed).length
             let uncompleted = grouped[neigh].length - finished;
             uncompleted > 0 && createBubbleByNeighborhood(neigh, uncompleted, neighborhoodSizes[neigh]);
         })
@@ -118,6 +125,7 @@ function Game(props) {
 
     useInterval(function () {
         //fetchEndpoint("/events/")
+        //fetchEndpoint("/teams/")
         //fetchEndpoint("/zones/")
     }, 5000)
 
@@ -180,7 +188,7 @@ function Game(props) {
             .attr("class", "canton")
             .attr("d", path)
             .attr("fill", "oklch(0.7 0.1 142)")
-            .attr("id", d => d.properties.name.replaceAll(" ", ""))
+            .attr("id", d => d.properties.name?.replaceAll(" ", ""))
             .attr("stroke", "black")
             .attr("stroke-width", "0.5px")
 
@@ -235,24 +243,6 @@ function Game(props) {
             .text(count)
     }
 
-
-    function updateSelected(selected) {
-        var g = d3.select("#pathsG").select(".zones").selectAll("g");
-        if (selected && selected !== "" && selected !== "travelmap") {
-            g.selectAll("path")
-                .transition()
-                .duration(200)
-                .attr("fill", (d) => d.properties.name === selected ? highlightColor : getColorForZone(d.properties.name, true))
-                .attr("stroke-width", (d) => d.properties.name === selected ? 3 : "0.1px");
-        } else {
-            g.selectAll("path")
-                .transition()
-                .duration(200)
-                .attr("fill", (d) => getColorForZone(d.properties.name, false))
-                .attr("stroke-width", "0.1px");
-        }
-    }
-
     // function updateColors() {
     //     var g = d3.select("#pathsG").select(".zones").selectAll("g");
     //     g.selectAll("path")
@@ -303,12 +293,10 @@ function Game(props) {
                     }
                     switch (endpoint) {
                         case "/teams/":
-                            console.log(data)
                             setTeams(data)
                             break;
                         case "/team/":
                             setTeam(data)
-                            console.log(data)
                             break;
                         case "/events/":
                             //Only update the events if something has actually changed.
@@ -324,10 +312,9 @@ function Game(props) {
                             break;
                         }
                         case "/team/challenges/":
-                            console.log(data)
+                            setTeamChallenges(data)
                             break;
                         case "/challenges/":
-                            console.log(data)
                             setChallenges(data)
                             break;
                         default:
@@ -344,7 +331,7 @@ function Game(props) {
     }
 
     async function postEndpoint(endpoint, body) {
-        let op = endpoint.replaceAll("/", "")
+        let op = endpoint?.replaceAll("/", "")
         return new Promise((resolve) => {
             fetch(props.backend + endpoint, {
                 method: 'POST',
@@ -427,6 +414,7 @@ function Game(props) {
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Challenges
                         team={team}
+                        teamChallenges={teamChallenges}
                         postEndpoint={postEndpoint}
                         fetchEndpoint={fetchEndpoint}
                         auth={props.auth}
@@ -438,7 +426,7 @@ function Game(props) {
                 <Grid2 size={{ xs: 11, md: 8 }}>
                     <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                 </Grid2>
-                {props.auth &&
+                {props.auth && team.username === "timjhh" &&
                     <Grid2 size={{ xs: 11, md: 8 }}>
                         <Message elevation={elevation} postEndpoint={postEndpoint} />
                     </Grid2>
