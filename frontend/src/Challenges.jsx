@@ -28,11 +28,9 @@ function Challenges(props) {
     const [challenge, setChallenge] = useState(null)
     //var IdentityPoolId = "IDENTITY_POOL_ID";
     const bucketName = "seattle-scramble";
-    const region = "us-west-2";
     const BASE_URL = "https://seattle-scramble.s3.us-west-2.amazonaws.com"
     const [s3, _] = useState(new S3Client({
         requestHandler: new XhrHttpHandler({}),
-        region: region,
         requestChecksumCalculation: 'WHEN_REQUIRED'
     }))
 

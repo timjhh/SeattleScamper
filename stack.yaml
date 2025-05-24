@@ -1,0 +1,250 @@
+Description: ECS Service to deploy the Scramble webapp
+
+Parameters:
+  LatestECSOptimizedAMI:
+    Description: ID of the latest ECS-optimized Amazon Linux 2023 AMI
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id
+
+  SecurityGroupIDs:
+    Type: CommaDelimitedList
+    Default: sg-0659b5901dc07ec8a
+
+  SubnetIDs:
+    Type: CommaDelimitedList
+    Default: subnet-0fc77df0746ca7842,subnet-03d8c390375b22f17,subnet-0ba47ebc874315530,subnet-08c4f72c17d66db2f
+
+  VPCID:
+    Type: String
+    Default: vpc-09a91b65200dbbc8e
+
+  CertificateArn:
+    Type: String
+    Default: arn:aws:acm:us-west-2:416463444955:certificate/c0d4a271-259b-4cdf-aa24-af60396a2ad7
+
+Resources:
+  FrontendRepository:
+    DeletionPolicy: RetainExceptOnCreate
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: scramble-frontend
+
+  BackendRepository:
+    DeletionPolicy: RetainExceptOnCreate
+    Type: AWS::ECR::Repository
+    DependsOn: FrontendRepository
+    Properties:
+      RepositoryName: scramble-backend
+
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: swiss-scramble
+
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  ECSTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: frontend-backend-task
+      NetworkMode: host
+      RequiresCompatibilities:
+        - EC2
+      Cpu: "256"
+      Memory: "512"
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      Volumes:
+        - Name: db
+          Host:
+            SourcePath: /local/db
+      ContainerDefinitions:
+        - Name: frontend
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/scramble-frontend:latest
+          Essential: true
+          PortMappings:
+            - ContainerPort: 80
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudWatchLogGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: frontend
+        - Name: backend
+          Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/scramble-backend:latest
+          Essential: true
+          MountPoints:
+            - ContainerPath: /backend/database/local/
+              SourceVolume: db
+          PortMappings:
+            - ContainerPort: 8000
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref CloudWatchLogGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: backend
+
+  CloudWatchLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/scramble
+      RetentionInDays: 30
+
+  ECSInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ECSInstanceRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+      Path: /
+
+  ECSInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: ECSInstanceProfile
+      Path: /
+      Roles:
+        - !Ref ECSInstanceRole
+
+  ECSLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: ECSLaunchTemplate
+      LaunchTemplateData:
+        InstanceType: t3.micro
+        ImageId: !Ref LatestECSOptimizedAMI
+        KeyName: icf-access
+        IamInstanceProfile:
+          Arn: !GetAtt ECSInstanceProfile.Arn
+        SecurityGroupIds: !Ref SecurityGroupIDs
+        UserData: !Base64
+          Fn::Sub: |
+            #!/bin/bash
+            echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+            yum install -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}
+
+  ECSAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier: !Ref SubnetIDs
+      LaunchTemplate:
+        LaunchTemplateName: ECSLaunchTemplate
+        Version: !GetAtt ECSLaunchTemplate.LatestVersionNumber
+      MinSize: "1"
+      MaxSize: "3"
+      DesiredCapacity: "1"
+
+  ECSService:
+    Type: AWS::ECS::Service
+    DependsOn:
+      - FrontendRepository
+      - BackendRepository
+      - LoadBalancer
+    Properties:
+      Cluster: !Ref ECSCluster
+      TaskDefinition: !Ref ECSTaskDefinition
+      LaunchType: EC2
+      ServiceName: scramble-service
+      SchedulingStrategy: REPLICA
+      DesiredCount: 0
+      AvailabilityZoneRebalancing: DISABLED
+      LoadBalancers:
+        - ContainerName: frontend
+          ContainerPort: 80
+          TargetGroupArn: !Ref FrontendTargetGroup
+        - ContainerName: backend
+          ContainerPort: 8000
+          TargetGroupArn: !Ref BackendTargetGroup
+      DeploymentConfiguration:
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+      DeploymentController:
+        Type: ECS
+      PlacementStrategies:
+        - Field: attribute:ecs.availability-zone
+          Type: spread
+        - Field: instanceId
+          Type: spread
+      EnableECSManagedTags: true
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: swiss-balance
+      Subnets: !Ref SubnetIDs
+      Type: application
+
+  FrontendTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /
+      Name: frontend
+      Port: 80
+      Protocol: HTTP
+      TargetType: instance
+      HealthCheckProtocol: HTTP
+      VpcId: !Ref VPCID
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "10"
+
+  BackendTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /docs
+      Name: backend
+      Port: 8000
+      Protocol: HTTP
+      TargetType: instance
+      HealthCheckProtocol: HTTP
+      VpcId: !Ref VPCID
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "10"
+
+  FrontendListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - !Ref CertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref FrontendTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+
+  BackendListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - !Ref CertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref BackendTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 8000
+      Protocol: HTTPS
