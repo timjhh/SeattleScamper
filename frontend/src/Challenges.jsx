@@ -132,11 +132,11 @@ function Challenges(props) {
 
     return (
         <>
-            <Box sx={{ mb: 1, display: 'flex', justifyContent: 'space-between' }}>
-                <ListSubheader id="challenges-title">Challenges</ListSubheader>
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <ListSubheader sx={{ p: 0 }} id="challenges-title">Hide Completed</ListSubheader>
-                    <Checkbox sx={{ pl: 1 }} checked={hideCompleted} onChange={handleHideCompleted} />
+            <Box sx={{ my: 1, display: 'flex', justifyContent: 'space-between' }} alignItems={"center"}>
+                <Typography variant="body-1" sx={{ p: 0, color: 'text.secondary' }}>Challenges</Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'row'  }} alignItems={"center"}>
+                    <Typography variant="body-1" sx={{ p: 0, color: 'text.secondary' }}>Hide Completed</Typography>
+                    <Checkbox sx={{ pl: 1, pb: 0 }} checked={hideCompleted} onChange={handleHideCompleted} />
                 </Box>
             </Box>
             <Grid2 container direction="row" spacing={2}>

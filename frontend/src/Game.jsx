@@ -401,18 +401,19 @@ function Game(props) {
                 </Box>
             </Modal>
 
-            <Grid2 container direction="column">
-                {props.auth && (
-                    <>
-                        <Grid2 size={{ xs: 11, md: 8 }}>
+            {/* <Grid2 container direction="column" display={"flex"} alignItems={"center"} justifyContent={"center"} alignContent={"center"}> */}
+            <Box>
+                {props.auth ? (
+                    <Grid2 container direction="column" display={"flex"} alignItems={"center"} justifyContent={"center"} alignContent={"center"}>
+                        <Grid2 sx={{mt: 5}} size={{ xs: 11, md: 9 }}>
                             <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
                                 <svg display="flex" id="travelmap">
                                 </svg>
                             </Paper>
                         </Grid2>
 
-                        <Grid2 size={{ xs: 11, md: 8 }}>
-                            <Paper sx={{ p: 1 }} elevation={elevation}>
+                        <Grid2 size={{ xs: 11, md: 9 }}>
+                            <Paper sx={{ p: 1, mt:2 }} elevation={elevation}>
                                 <Typography sx={{ textAlign: 'center' }} variant="h5">{team.team_name}</Typography>
                                 <Grid2 justifyContent={'space-evenly'} sx={{ textAlign: 'center' }} container direction="row" spacing={2}>
                                     <Grid2 item size={{ sx: 6 }}>
@@ -426,7 +427,7 @@ function Game(props) {
                                 </Grid2>
                             </Paper>
                         </Grid2>
-                        <Grid2 size={{ xs: 11, md: 8 }}>
+                        <Grid2 size={{ xs: 11, md: 9 }}>
                             <Challenges
                                 team={team}
                                 teamChallenges={teamChallenges}
@@ -438,27 +439,24 @@ function Game(props) {
                                 handleShow={handleShow}
                                 setCurrentURL={setCurrentURL} />
                         </Grid2>
-                        <Grid2 size={{ xs: 11, md: 8 }}>
+                        <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
                             <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
                         </Grid2>
-                    </>
-                )}
+                    </Grid2>
+                )
+            : (
+                <About elevation={elevation} />
+            )}
                 {props.auth && team.username === "timjhh" &&
-                    <Grid2 size={{ xs: 11, md: 8 }}>
+                    <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
                         <Message elevation={elevation} postEndpoint={postEndpoint} />
                     </Grid2>
                 }
-                <Grid2 size={{ xs: 11, md: 8 }}>
-                    <Score team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
+                <Grid2 size={{ xs: 12 }}>
+                    <Score sx={{my:2}} team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
                 </Grid2>
-
-
-                <About elevation={elevation} />
-
-                <Grid2>
-                    
-                </Grid2>
-            </Grid2>
+            {/* </Grid2> */}
+            </Box>
 
         </>
     );
