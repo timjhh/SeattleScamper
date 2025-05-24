@@ -1,5 +1,5 @@
 * {
-    font-family:Verdana, Geneva, Tahoma, sans-serif
+    font-family:Lexend, Verdana, Geneva, Tahoma, sans-serif
 }
 
 #root {
@@ -15,3 +15,61 @@ body {
     max-width: 100%;
     max-height: 100%;
 }
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    min-height: 500px;
+    width: 100vw;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .seattlebg {
+    background-image: url("src/assets/seattle.jpg");
+  }
+
+  .transitbg {
+    background-image: url("src/assets/hero-blossom.jpg");
+  }
+
+/* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
+@media only screen and (max-device-width: 1366px) {
+    .parallax {
+      background-attachment: scroll;
+    }
+  }
+
+  @font-face {
+    src: url("https://www.axis-praxis.org/fonts/webfonts/MetaVariableDemo-Set.woff2")
+      format("woff2");
+    font-family: "Meta";
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  
+  .titlebox {
+    transition: all 0.5s;
+    -webkit-text-stroke: 4px #d6f4f4;
+    font-variation-settings: "wght" 900, "ital" 1;
+    font-size: 15rem;
+    text-align: center;
+    color: transparent;
+    font-family: "Meta", sans-serif;
+    text-shadow: 10px 10px 0px #07bccc,
+      15px 15px 0px #e601c0,
+      20px 20px 0px #e9019a,
+      25px 25px 0px #f40468,
+      45px 45px 10px #482896;
+    cursor: pointer;
+  }
+  
+  .titlebox:hover {
+    font-variation-settings: "wght" 100, "ital" 0;
+    text-shadow: none;
+  }

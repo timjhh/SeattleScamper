@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { blue, grey } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router";
 import Cookies from 'js-cookie'
