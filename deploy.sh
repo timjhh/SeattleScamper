@@ -1,9 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env sh
 # Deploy the container images to ECR.
 # usage: ./deploy.sh <region>
-set -e
+set -ex
+
+# aws cloudformation deploy --stack-name scramble-stack --template-file stack.yaml
+
 # Variables
-DOCKER_BUILD="finch build --platform=linux/amd64"
+DOCKER_BUILD="sudo docker build --platform=linux/amd64"
 AWS_REGION="$1"
 if [ -z ${AWS_REGION} ]; then
   AWS_REGION="us-west-2"
@@ -15,14 +18,16 @@ FRONTEND_IMAGE="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${FRONTEND
 BACKEND_IMAGE="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${BACKEND_REPO_NAME}:latest"
 
 # Authenticate Docker to ECR
-aws ecr get-login-password --region ${AWS_REGION} | finch login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+sudo aws ecr get-login-password --region ${AWS_REGION} | sudo docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+#aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 049625203700.dkr.ecr.us-west-2.amazonaws.com
+#sudo aws ecr get-login-password --region us-west-2 | sudo docker login --username AWS --password-stdin 049625203700.dkr.ecr.us-west-2.amazonaws.com
 
 # Build Docker images
 $DOCKER_BUILD -t ${FRONTEND_IMAGE} ./frontend
 $DOCKER_BUILD -t ${BACKEND_IMAGE} ./backend
 
 # Push Docker images to ECR
-finch push ${FRONTEND_IMAGE}
-finch push ${BACKEND_IMAGE}
+sudo docker push ${FRONTEND_IMAGE}
+sudo docker push ${BACKEND_IMAGE}
  
-aws ecs update-service --cluster scramble --service scramble-service --task-definition frontend-backend-task --force-new-deployment --region ${AWS_REGION}
+sudo aws ecs update-service --cluster scramble --service scramble-service --task-definition frontend-backend-task --force-new-deployment --region ${AWS_REGION}

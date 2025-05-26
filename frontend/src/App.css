@@ -30,11 +30,15 @@ body {
   }
 
   .seattlebg {
-    background-image: url("src/assets/seattle.jpg");
+    background-image: url("/src/assets/seattle.jpg");
   }
 
   .transitbg {
-    background-image: url("src/assets/hero-blossom.jpg");
+    background-image: url("/src/assets/hero-blossom.jpg");
+  }
+
+  .transitbgblur {
+    backdrop-filter: blur(4px)
   }
 
 /* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */

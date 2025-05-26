@@ -1,5 +1,15 @@
 Description: ECS Service to deploy the Scramble webapp
 
+# Manual Steps Needed:
+## 1. Create ec2 key-pair (.pem for ssh)
+## 2. Update security groups, subnets and VPCs with existing ones.
+## 3. Create new certificate for DNS forwarding with AWS Certificate Manager.
+## 4. Go to the new ACM entry and copy the CNAME name. For Squarespace, create a new
+### CNAME record using this. Omit the website at the end e.g. _1233523545.example.com.
+### do not append the example.com.
+### Copy the CNAME value and set it for the Data field.
+### Wait 5 minutes for validation to autocomplete.
+
 Parameters:
   LatestECSOptimizedAMI:
     Description: ID of the latest ECS-optimized Amazon Linux 2023 AMI
@@ -8,19 +18,19 @@ Parameters:
 
   SecurityGroupIDs:
     Type: CommaDelimitedList
-    Default: sg-0659b5901dc07ec8a
+    Default: sg-01eb579c957aaff2b
 
   SubnetIDs:
     Type: CommaDelimitedList
-    Default: subnet-0fc77df0746ca7842,subnet-03d8c390375b22f17,subnet-0ba47ebc874315530,subnet-08c4f72c17d66db2f
+    Default: subnet-0fa16b44f9c04e1a5,subnet-09b5e24db4b4fcc93,subnet-0f2d68403d8e8c5ef,subnet-085985d6541db765d
 
   VPCID:
     Type: String
-    Default: vpc-09a91b65200dbbc8e
+    Default: vpc-03416842138cee2fa
 
   CertificateArn:
     Type: String
-    Default: arn:aws:acm:us-west-2:416463444955:certificate/c0d4a271-259b-4cdf-aa24-af60396a2ad7
+    Default: arn:aws:acm:us-west-2:049625203700:certificate/fe975f94-ea8c-4438-80b3-fae2b369f6c4
 
 Resources:
   FrontendRepository:
@@ -39,7 +49,17 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: swiss-scramble
+      ClusterName: scramble
+
+  # GameBucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     BucketName: scramble-game-bucket
+  #     PublicAccessBlockConfiguration:
+  #       BlockPublicAcls: false
+  #       BlockPublicPolicy: false
+  #       IgnorePublicAcls: false
+  #       RestrictPublicBuckets: false
 
   TaskExecutionRole:
     Type: AWS::IAM::Role
@@ -132,7 +152,7 @@ Resources:
       LaunchTemplateData:
         InstanceType: t3.micro
         ImageId: !Ref LatestECSOptimizedAMI
-        KeyName: icf-access
+        KeyName: admin-access
         IamInstanceProfile:
           Arn: !GetAtt ECSInstanceProfile.Arn
         SecurityGroupIds: !Ref SecurityGroupIDs
@@ -193,7 +213,7 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: swiss-balance
+      Name: scramble-balance
       Subnets: !Ref SubnetIDs
       Type: application
 
