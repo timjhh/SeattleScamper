@@ -2,20 +2,16 @@
 import {
     FormControl,
     ListItem,
-    ListSubheader,
     LinearProgress,
     ListItemText,
     Paper,
-    List,
     Typography,
     Checkbox,
     Grid2,
     Button,
     Box
 } from "@mui/material";
-import AWS from "aws-sdk";
-import { S3Client, ListBucketsCommand, PutObjectCommand, ListObjectsCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3Client } from "@aws-sdk/client-s3";
 import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
 import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
@@ -30,6 +26,7 @@ function Challenges(props) {
     const bucketName = "seattle-scramble";
     const BASE_URL = "https://seattle-scramble.s3.us-west-2.amazonaws.com"
     const [s3, _] = useState(new S3Client({
+        region: 'us-west-2',
         requestHandler: new XhrHttpHandler({}),
         requestChecksumCalculation: 'WHEN_REQUIRED'
     }))
@@ -104,7 +101,6 @@ function Challenges(props) {
     }
 
     async function handleUploadClick(event) {
-        console.log(challenge)
         const files = event.target.files;
         if (!files || files.length === 0) {
             enqueueSnackbar("No file selected", { variant: "error", autoHideDuration: 3000 })

@@ -7,6 +7,7 @@ import {
     Paper,
 } from "@mui/material";
 import * as d3 from 'd3';
+import CloseIcon from '@mui/icons-material/Close';
 //import { getStorage, ref, listAll, uploadBytesResumable, getMetadata, deleteObject } from "firebase/storage";
 
 
@@ -18,6 +19,7 @@ import Events from "./Events.jsx"
 import Message from "./Message.jsx";
 import Challenges from "./Challenges.jsx";
 import About from "./About.jsx";
+import { AspectRatio } from "@mui/icons-material";
 
 function Game(props) {
     const elevation = 5;
@@ -26,17 +28,16 @@ function Game(props) {
     const [currentURL, setCurrentURL] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = (u) => {
-        console.log(u)
         setShow(true)
         setCurrentURL(u)
     }
 
     const style = {
-        transform: 'translate(0, 50%)',
         margin: 'auto',
-        display: 'block',
-        width: '80%',
-        maxWidth: '100vw',
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     };
 
 
@@ -397,7 +398,8 @@ function Game(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <img display="block" className="modalimg" src={currentURL} />
+                    <img className="modalimg" src={currentURL} />
+                    <CloseIcon onClick={handleClose} sx={{ position: 'absolute', top: 0, right: 0 }} style={{color: "black", "cursor": "pointer"}} />
                 </Box>
             </Modal>
 

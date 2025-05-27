@@ -61,6 +61,32 @@ Resources:
   #       IgnorePublicAcls: false
   #       RestrictPublicBuckets: false
 
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: "/" 
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        ReadFromS3Policy:
+        Type: 'AWS::IAM::Policy'
+        Properties:
+          PolicyName: ReadFromS3Policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:Get*'
+                  - 's3:List*'
+                  - 's3:Put*'
+                Resource: '*'
+
   TaskExecutionRole:
     Type: AWS::IAM::Role
     Properties:

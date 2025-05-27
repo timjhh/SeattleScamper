@@ -12,8 +12,10 @@ body {
 }
 
 .modalimg {
-    max-width: 100%;
-    max-height: 100%;
+    outline: none;
+    height: auto;
+    margin: auto;
+    width: 100%;
 }
 
 .parallax {
@@ -27,6 +29,17 @@ body {
     height: 80vh;
     margin: 0;
     padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .seattlebg {
