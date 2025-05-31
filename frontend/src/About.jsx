@@ -55,8 +55,8 @@ function About(props) {
                     <AccordionDetails>
                         <ul>
                             <li>The game will run from 1pm-6pm</li>
-                            <li>Players should meet outside of the <a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/NVMSqmpp3HLpKC1M8">University of Washington Lightrail Station</a> at 1pm.</li>
-                            <li>Players should meet at Westlake Station at 6pm.</li>
+                            <li>Players should meet at<a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/TWw4XDrGe4wsevyv9">Westlake Park Lightrail Station</a> at 1pm.</li>
+                            <li>Players should return to thi.</li>
                         </ul>
                     </AccordionDetails>
                 </Accordion>
@@ -115,6 +115,8 @@ function About(props) {
                         <Typography variant="h4">What kinds of transit can I take?</Typography>
                         <Typography variant="body1">
                             Teams are permitted to use any form of public transit and walking. This includes the light rail, bus, monorail, street car, etc.
+                            <br/>
+                            Players are not allowed to use any form of personal transportation including bike, rideshare app, scooter, skates, car, motorcycle, watercraft or aircraft.
                         </Typography>
                         <hr/>
                         <Typography variant="h4">What are the game boundaries?</Typography>
@@ -122,10 +124,9 @@ function About(props) {
                             No area of Seattle is explicitly prohibited. The game has been designed with existing transit routes in mind, so players are discouraged from straying too far from any transit line as a strategic matter.
                         </Typography>
                         <hr/>
-                        <Typography variant="h4">What do I need to play?</Typography>
+                        <Typography variant="h4">Do I need a team to play?</Typography>
                         <Typography variant="body1">
-                            Players are encouraged to find and form teams of three prior to the event.
-                            Players that do not have a team on the day of the event will be randomly paired with an existing team. See the requirements tab for recommended items to bring.
+                            No! Players are encouraged to find and form teams of three prior to the event, but feel free to show up regardless. New teams will be randomly made on the day of the event, or you will be assigned to an existing team.
                         </Typography>
                         <hr/>
                         <Typography variant="h4">How do I sign up?</Typography>
