@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { Parallax } from 'react-parallax';
 import './App.css';
+import seattleBg from "/src/assets/seattle.jpg"
+import heroBlossom from "/src/assets/hero-blossom.jpg"
 
 
 
@@ -18,7 +20,7 @@ function About(props) {
     return (
         <>
 
-            <Parallax sx={{ height: '60vh' }} blur={0} bgImage="/src/assets/seattle.jpg" bgImageAlt="space needle and dark city" strength={400}>
+            <Parallax sx={{ height: '60vh' }} blur={0} bgImage={seattleBg} bgImageAlt="space needle and dark city" strength={400}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"center"} alignContent={"center"}>
                     <Box mx={3} px={1} display={"flex"} alignItems={"center"} sx={{ height: '80vh' }} >
                         <div className="titlebox">
@@ -32,7 +34,7 @@ function About(props) {
             </Parallax>
             <Box sx={{ backgroundColor: 'oklch(0.6582 0.169 248.81)', p: 1 }}>
                 <Typography sx={{ m: 2 }} align="center" variant="h6">
-                    The Seattle Scramble is a public transit based strategy game where teams use transit to traverse the city and complete challenges.
+                    The Seattle Scramble is a strategy game where teams use public transit to traverse the city and complete challenges.
                 </Typography>
             </Box>
                 <Accordion>
@@ -43,7 +45,9 @@ function About(props) {
                             <br /><br />
                             Players will start with a map depicting each neighborhood and the amount of challenges remaining in each one. A challenge is composed of a location visit and secret activity.
                             Players must visit the location and submit a photograph of their team there to unlock the activity. Players can then complete the activity to earn additional points. Teams must begin together
-                            at the starting location and by checking in with a game host.
+                            at the starting location and end the game by checking in with a game host before 6pm. 
+                            <br/><br/>
+                            <b>Activities do not have to be completed, and may be difficult to accomplish</b>. Teams may not submit failed activity attempts.
                             <br /><br />
                             Transit games have been growing in popularity in recent years, with some notable examples being <a href="https://en.wikipedia.org/wiki/Jet_Lag:_The_Game" target="_blank" rel="noopener noreferrer">Jet Lag: The Game</a> and <a href="https://en.wikipedia.org/wiki/The_Amazing_Race" target="_blank" rel="noopener noreferrer">The Amazing Race</a>. If you like this game, 
                             consider participating in the local <a href="https://transittrek.org/" target="_blank" rel="noopener noreferrer">Seattle Transit Trek</a> that occurs several times a year.
@@ -60,7 +64,7 @@ function About(props) {
                         </ul>
                     </AccordionDetails>
                 </Accordion>
-            <Parallax sx={{ height: '60vh' }} bgImage="/src/assets/hero-blossom.jpg" bgImageAlt="train in cherry blossoms" strength={400}>
+            <Parallax sx={{ height: '60vh' }} bgImage={heroBlossom} bgImageAlt="train in cherry blossoms" strength={400}>
                 <Box sx={{ height: '60vh'}} display={"flex"} alignItems={"center"} justifyContent={"center"} alignContent={"center"}>
                     <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"} alignContent={"center"} sx={{ backgroundColor: 'oklch(0.6582 0.169 248.81 / 80%)', p:2, width:'100%' }} >
                         <Typography variant="h3"><b>Ready to play?</b></Typography>
@@ -90,6 +94,7 @@ function About(props) {
                             <li>Teams may not work with other teams to complete challenges.</li>
                             <li>Challenge submission is asynchronous, but will be reviewed. It is an expectation that teams are honest about their submissions, and they are done
                                 to the best of your ability.</li>
+                            <li>Location submissions and activities do not have to be completed together. You may give up on an activity while still receiving points for finding the location.</li>
                             <li>Teams are not allowed to split up during gameplay. Any team that is caught splitting up will be disqualified.</li>
                             <li>Teams must meet at the ending location at 6pm to check in. Any team that is not present to check in by 6pm will lose 10 points.</li>
                             <li>Some challenges may require purchasing small items under $5. Players may not bring items to count for challenge completion.</li>
@@ -127,6 +132,11 @@ function About(props) {
                         <Typography variant="h4">Do I need a team to play?</Typography>
                         <Typography variant="body1">
                             No! Players are encouraged to find and form teams of three prior to the event, but feel free to show up regardless. New teams will be randomly made on the day of the event, or you will be assigned to an existing team.
+                        </Typography>
+                        <hr/>
+                        <Typography variant="h4">Can I use the internet?</Typography>
+                        <Typography variant="body1">
+                            Yes! You are permitted to use your smartphone for assistance.
                         </Typography>
                         <hr/>
                         <Typography variant="h4">How do I sign up?</Typography>
