@@ -413,7 +413,14 @@ function Game(props) {
                                 </svg>
                             </Paper>
                         </Grid2>
-
+                        <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
+                            <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
+                        </Grid2>
+                        {team.username === "timjhh" &&
+                        <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
+                            <Message elevation={elevation} postEndpoint={postEndpoint} />
+                        </Grid2>
+                        }
                         <Grid2 size={{ xs: 11, md: 9 }}>
                             <Paper sx={{ p: 1, mt:2 }} elevation={elevation}>
                                 <Typography sx={{ textAlign: 'center' }} variant="h5">{team.team_name}</Typography>
@@ -441,25 +448,17 @@ function Game(props) {
                                 handleShow={handleShow}
                                 setCurrentURL={setCurrentURL} />
                         </Grid2>
-                        <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
-                            <Events events={events} fetchEvents={fetchEvents} updateEvents={props.updateEvents} elevation={elevation} />
+
+                        <Grid2 size={{ xs: 12 }} sx={{mt:5}}>
+                            <Score sx={{mt:2}} team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
                         </Grid2>
                     </Grid2>
+
                 )
             : (
                 <About elevation={elevation} />
             )}
-                {props.auth && team.username === "timjhh" &&
-                    <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>
-                        <Message elevation={elevation} postEndpoint={postEndpoint} />
-                    </Grid2>
-                }
-                <Grid2 size={{ xs: 12 }}>
-                    <Score sx={{my:2}} team={team} setRank={setRank} teams={teams} elevation={elevation} zones={zones} />
-                </Grid2>
-            {/* </Grid2> */}
             </Box>
-
         </>
     );
 }
