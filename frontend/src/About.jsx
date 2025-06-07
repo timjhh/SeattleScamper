@@ -90,6 +90,7 @@ function About(props) {
                     <AccordionDetails>
                         <ul>
                             <li><b>Players may not jaywalk.</b></li>
+                            <li><b>Players may not run, unless there there is an immediate risk of missing a bus or train. Teams caught running will face a point penalty.</b></li>
                             <li>Players may not use personal transportation to play the game. This includes driving, ridesharing apps such as Lyft, and ridesharing apps.</li>
                             <li>Teams may not work with other teams to complete challenges.</li>
                             <li>Challenge submission is asynchronous, but will be reviewed. It is an expectation that teams are honest about their submissions, and they are done
