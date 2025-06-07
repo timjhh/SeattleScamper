@@ -3,7 +3,7 @@
 # usage: ./deploy.sh <region>
 set -ex
 
-# aws cloudformation update-stack --stack-name scramble-stack --template-body file:///stack.yaml
+# aws cloudformation update-stack --stack-name scramble-stack --template-body file://stack.yaml --capabilities CAPABILITY_NAMED_IAM
 
 # Variables
 DOCKER_BUILD="sudo docker build --platform=linux/amd64"

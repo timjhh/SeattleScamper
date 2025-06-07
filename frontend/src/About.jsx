@@ -60,7 +60,7 @@ function About(props) {
                         <ul>
                             <li>The game will run from 1pm-6pm</li>
                             <li>Players should meet at<a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/TWw4XDrGe4wsevyv9">Westlake Park Lightrail Station</a> at 1pm.</li>
-                            <li>Players should return to thi.</li>
+                            <li>Players should finish the game at<a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/ZmJf6Lk9nkoZHSz39">Parrington Lawn @ the University of Washginton</a> at 6pm. <b>Teams will receive a 10 point deduction for being late.</b></li>
                         </ul>
                     </AccordionDetails>
                 </Accordion>

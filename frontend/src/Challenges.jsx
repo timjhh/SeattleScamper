@@ -34,6 +34,7 @@ function Challenges(props) {
     const FOUND_STAGE = 'findme'
     const CHALLENGE_STAGE = 'challenge'
 
+    
 
     function handleHideCompleted(e) {
         setHideCompleted(e.target.checked)

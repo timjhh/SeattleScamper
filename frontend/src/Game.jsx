@@ -19,13 +19,15 @@ import Events from "./Events.jsx"
 import Message from "./Message.jsx";
 import Challenges from "./Challenges.jsx";
 import About from "./About.jsx";
-import { AspectRatio } from "@mui/icons-material";
+import NeighborhoodSelect from "../NeighborhoodSelect.jsx";
 
 function Game(props) {
     const elevation = 5;
     // image view modal toggles.
     const [show, setShow] = useState(false);
     const [currentURL, setCurrentURL] = useState("")
+    const [selectedNeighborhood, setSelectedNeighborhood] = useState("")
+    const [remaining, setRemaining] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = (u) => {
         setShow(true)
@@ -134,9 +136,8 @@ function Game(props) {
     }, [challenges]);
 
     useInterval(function () {
-        //fetchEndpoint("/events/")
-        //fetchEndpoint("/teams/")
-        //fetchEndpoint("/zones/")
+        // fetchEndpoint("/events/")
+        // fetchEndpoint("/teams/")
     }, 5000)
 
     function useInterval(callback, delay) {
@@ -242,30 +243,24 @@ function Game(props) {
         cr
             .append("circle")
             .attr("r", (size * 5))
-            .style("fill", "#FFFFFF")
+            .attr("fill", "#FFFFFF")
             .attr("opacity", 0.5)
             .attr("stroke", "black")
             .attr("stroke-width", 1)
             .attr("fill-opacity", .4)
+            .attr('id', neighborhood)
+            .on('click', () => (updateNeighborhood(neighborhood, count)))
         cr.append("text")
             .attr("dx", -5)
             .attr("dy", 5)
             .text(count)
     }
 
-    // function updateColors() {
-    //     var g = d3.select("#pathsG").select(".zones").selectAll("g");
-    //     g.selectAll("path")
-    //         .transition()
-    //         .duration(200)
-    //         .attr("fill", (d) => getColorForZone(d.properties.name, false))
-    //         .attr("stroke-width", "0.1px");
-    // }
+    function updateNeighborhood(neighborhood, count) {
+        setSelectedNeighborhood(neighborhood)
+        setRemaining(count)
+    }
 
-    // function getColorForZone(value, faded) {
-    //     let item = zones.find(e => e.name === value)
-    //     return getColor(item, faded)
-    // }
 
     async function fetchEvents() {
         //await fetchEndpoint("/teams/")
@@ -411,6 +406,11 @@ function Game(props) {
                             <Paper sx={{ borderColor: 'primary', border: 3 }} elevation={elevation}>
                                 <svg display="flex" id="travelmap">
                                 </svg>
+                            </Paper>
+                        </Grid2>
+                        <Grid2 sx={{mt: 5}} size={{ xs: 11, md: 9 }}>
+                            <Paper elevation={elevation}>
+                                <NeighborhoodSelect remaining={remaining} selectedNeighborhood={selectedNeighborhood} />
                             </Paper>
                         </Grid2>
                         <Grid2 sx={{my:2}} size={{ xs: 11, md: 9 }}>

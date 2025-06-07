@@ -72,20 +72,8 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
             Action: sts:AssumeRole
-      Policies:
-        ReadFromS3Policy:
-        Type: 'AWS::IAM::Policy'
-        Properties:
-          PolicyName: ReadFromS3Policy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:Get*'
-                  - 's3:List*'
-                  - 's3:Put*'
-                Resource: '*'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
 
   TaskExecutionRole:
     Type: AWS::IAM::Role
@@ -110,7 +98,7 @@ Resources:
       Cpu: "256"
       Memory: "512"
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
-      TaskRoleArn: arn:aws:iam::049625203700:role/S3AccessRole
+      TaskRoleArn: !GetAtt TaskRole.Arn
       Volumes:
         - Name: db
           Host:
