@@ -8,6 +8,7 @@ from .helpers import (
     new_event,
 )
 
+
 from ..database.database import SessionDep
 from ..database.models import (
     TeamPublic,
@@ -76,6 +77,59 @@ async def read_events(db: SessionDep):
 async def read_challenges(db: SessionDep):
     return db.exec(select(Challenge)).all()
 
+@router.post("/add/team/")
+async def read_team(
+    team_name: str,
+    db: SessionDep,
+    current_user: Annotated[Team, Depends(auth.get_current_user)],
+):
+    if current_user.username != "timjhh":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unauthenticated",
+        )
+    
+    query = select(Team).where(Team.team_name == team_name)
+    team = db.exec(query).first()
+    if team is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Team already exists",
+        )
+
+    password=auth.get_password_hash(team_name)
+    new_team = Team(
+        team_name=team_name,
+        username=team_name,
+        score=0,
+        hashed_password=password,
+        challenges=[]
+    )
+    db.add(new_team)
+    db.commit()
+    return new_team
+
+@router.post("/remove/team/")
+async def read_team(
+    team_id: int,
+    db: SessionDep,
+    current_user: Annotated[Team, Depends(auth.get_current_user)],
+):
+    if current_user.username != "timjhh":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unauthenticated",
+        )
+    
+    team = db.get(Team, team_id)
+    if team is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Team not found",
+        )
+    db.delete(team)
+    db.commit()
+    return team
 
 @router.post("/challenge/")
 async def post_challenge(

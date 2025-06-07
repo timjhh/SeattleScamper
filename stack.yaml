@@ -110,6 +110,7 @@ Resources:
       Cpu: "256"
       Memory: "512"
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: arn:aws:iam::049625203700:role/S3AccessRole
       Volumes:
         - Name: db
           Host:
