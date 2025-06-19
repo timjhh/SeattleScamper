@@ -95,6 +95,14 @@ function Game(props) {
     //     updateColors(zones)
     // }, [zones])
 
+    useEffect(() => {
+        d3.selectAll("circle").each((d,i,nodes) => {
+            d3.select(nodes[i])
+            .transition().duration(200)
+            .attr("fill", nodes[i].id === selectedNeighborhood ? 'red' : '#FFFFFF')
+        })
+    }, [selectedNeighborhood])
+
     // getChallenge returns a challenge's state given its id.
     function getChallenge(id) {
         return teamChallenges.find(c => c.challenge_id === id)

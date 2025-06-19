@@ -125,6 +125,11 @@ function About(props) {
                             Players are not allowed to use any form of personal transportation including bike, rideshare app, scooter, skates, car, motorcycle, watercraft or aircraft.
                         </Typography>
                         <hr/>
+                        <Typography variant="h4">How fit do I have to be to play?</Typography>
+                        <Typography variant="body1">
+                            Running is not allowed in this game, except for using public transit. You can expect to be on your feet all day but the game is not designed to be intense.
+                        </Typography>
+                        <hr/>
                         <Typography variant="h4">What are the game boundaries?</Typography>
                         <Typography variant="body1">
                             No area of Seattle is explicitly prohibited. The game has been designed with existing transit routes in mind, so players are discouraged from straying too far from any transit line as a strategic matter.
