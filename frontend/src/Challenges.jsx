@@ -11,26 +11,31 @@ import {
     Button,
     Box
 } from "@mui/material";
-import { S3Client } from "@aws-sdk/client-s3";
+import { S3Client, ListObjectsCommand } from "@aws-sdk/client-s3";
 import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
 import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { fromHttp } from "@aws-sdk/credential-providers";
 
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
     const [hideCompleted, setHideCompleted] = useState(false);
     const [uProgress, setUProgress] = useState(0)
     const [challenge, setChallenge] = useState(null)
-    //var IdentityPoolId = "IDENTITY_POOL_ID";
     const bucketName = "seattle-scramble";
     const BASE_URL = "https://seattle-scramble.s3.us-west-2.amazonaws.com"
+
     const [s3, _] = useState(new S3Client({
+        credentials: {
+            accessKeyId: import.meta.env.VITE_ACCESS_KEY,
+            secretAccessKey: import.meta.env.VITE_SECRET,
+            accountId: '049625203700',
+        },
         region: 'us-west-2',
         requestHandler: new XhrHttpHandler({}),
         requestChecksumCalculation: 'WHEN_REQUIRED'
     }))
-
     const FOUND_STAGE = 'findme'
     const CHALLENGE_STAGE = 'challenge'
 
@@ -43,21 +48,6 @@ function Challenges(props) {
     function sanitize(input) {
         return input?.replaceAll(/\s|\\/g, "")
     }
-
-    // async function listChallenges() {
-    //     const input = {
-    //         Bucket: bucketName,
-    //         Prefix: `${sanitize(props.team.team_name)}/`
-    //       };
-    //       const command = new ListObjectsCommand(input);
-    //       const response = await s3.send(command);
-    //       console.log(response)
-    // }
-
-    // useEffect(() => {
-    //     // 
-    //     listChallenges()
-    // }, [props.team])
 
     async function handleSubmitChallenge(file) {
         if (!challenge.id) {

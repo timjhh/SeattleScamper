@@ -40,13 +40,6 @@ async def read_team_challenges(
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
-    
-    if not current_user or not current_user.id:
-        # This should ideally be caught by auth.get_current_user raising an error
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not authenticate team.",
-        )
 
     if current_user:
         statement = select(TeamChallengeLink).where(TeamChallengeLink.team_id == current_user.id)
@@ -55,6 +48,7 @@ async def read_team_challenges(
         if not team_challenges:
             return []
         return team_challenges
+
 
     return []
 

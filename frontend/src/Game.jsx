@@ -76,11 +76,12 @@ function Game(props) {
             .catch((err) => {
                 console.log("Error rendering map data " + err);
             });
-        await fetchEndpoint("/team/challenges/")
+        
         await fetchEndpoint("/events/")
         await fetchEndpoint("/team/")
         // await fetchEndpoint("/zones/")
         await fetchEndpoint("/teams/")
+        await fetchEndpoint("/team/challenges/")
         await fetchEndpoint("/challenges/")
         // await fetchEndpoint("/curses/")
     }
