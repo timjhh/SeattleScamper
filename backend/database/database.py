@@ -13,7 +13,7 @@ from .models import Challenge, Team
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
     load_default_data()
-    load_admin_user()
+    #load_admin_user()
     load_challenges(engine)
 
 

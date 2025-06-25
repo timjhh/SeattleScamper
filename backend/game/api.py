@@ -27,7 +27,6 @@ router = APIRouter()
 
 POINTS_FOR_FIND = 3
 
-
 @router.get("/team/")
 async def read_team(
     current_user: Annotated[Team, Depends(auth.get_current_user)],

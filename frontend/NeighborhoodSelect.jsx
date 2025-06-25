@@ -29,7 +29,7 @@ function NeighborhoodSelect(props) {
             </Grid2>
             <Grid2 item size={{ xs: 3 }}>
                 <FormControl sx={{ width: "100%" }} aria-label="Canton team display">
-                    <TextField id="team-textfield" label="Remaining Challenges" defaultValue={props.remaining} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
+                    <TextField id="team-textfield" label="Points Available" defaultValue={props.remaining} slotProps={{ inputLabel: { shrink: true }, input: { readOnly: true } }} />
                 </FormControl>
             </Grid2>
             </Grid2>

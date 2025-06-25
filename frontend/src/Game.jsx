@@ -8,9 +8,6 @@ import {
 } from "@mui/material";
 import * as d3 from 'd3';
 import CloseIcon from '@mui/icons-material/Close';
-//import { getStorage, ref, listAll, uploadBytesResumable, getMetadata, deleteObject } from "firebase/storage";
-
-
 import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
@@ -137,9 +134,12 @@ function Game(props) {
         // Challenges will be grouped by neighborhood.
         // Once grouped, display the number of challenges in each neighborhood.
         let grouped = groupBy(challenges, 'neighborhood');
-        Object.keys(grouped).forEach(neigh => {
-            let finished = grouped[neigh].filter(c => getChallenge(c.id)?.completed).length
-            let uncompleted = grouped[neigh].length - finished;
+        Object.keys(grouped).forEach((neigh,idx) => {
+            // Filter for total amount of points in each challenge. Filter for points your team has. Subtract the second from the first. 
+            let remaining = grouped[neigh].reduce((a,curr) => a+(curr.points), 0)
+            let finished = grouped[neigh].filter(c => getChallenge(c.id)?.completed).reduce((a,curr) => a+(curr.points), 0)
+            
+            let uncompleted = remaining - finished;
             uncompleted > 0 && createBubbleByNeighborhood(neigh, uncompleted, neighborhoodSizes[neigh] ? neighborhoodSizes[neigh] : neighborhoodSizes['default']);
         })
     }, [challenges]);

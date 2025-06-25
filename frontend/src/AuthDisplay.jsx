@@ -79,10 +79,8 @@ function AuthDisplay(props) {
           switch (endpoint) {
             case "/team/":
               setTeam(data)
-              console.log(data)
               break;
             case "/teams/":
-              console.log(data)
               break;
             default:
               console.log(`warning: no endpoint handler available for ${endpoint}`)

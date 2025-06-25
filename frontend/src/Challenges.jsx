@@ -11,12 +11,11 @@ import {
     Button,
     Box
 } from "@mui/material";
-import { S3Client, ListObjectsCommand } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
 import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
-import { useState, useRef, useEffect } from 'react';
-import { fromHttp } from "@aws-sdk/credential-providers";
+import { useState, useRef } from 'react';
 
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
@@ -38,8 +37,6 @@ function Challenges(props) {
     }))
     const FOUND_STAGE = 'findme'
     const CHALLENGE_STAGE = 'challenge'
-
-    
 
     function handleHideCompleted(e) {
         setHideCompleted(e.target.checked)
