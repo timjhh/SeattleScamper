@@ -123,12 +123,18 @@ function Challenges(props) {
             if (err instanceof Error && err.name === "AbortError") {
                 enqueueSnackbar(`Multipart upload was aborted. ${err.message}`, { variant: "error", autoHideDuration: 3000 })
                 console.error(`Multipart upload was aborted. ${err.message}`);
+                setUProgress(0);
+                return;
               } else {
                 enqueueSnackbar(`Error uploading image: ${err}`, { variant: "error", autoHideDuration: 3000 })
                 console.error(`Error uploading image: ${err}`);
+                setUProgress(0);
+                return;
               }
         }
         setUProgress(0);
+        props.handleShow('')
+        enqueueSnackbar("Successfully reuploaded challenge submission 🎉", { variant: "success", autoHideDuration: 3000 })
     }
 
     async function handleUploadClick(event) {
@@ -148,13 +154,15 @@ function Challenges(props) {
 
 
     async function handleUpdateClick(event) {
-        console.log(event)
-        console.log(event.target)
-        console.log(stage)
         const files = event.target.files;
         if (!files || files.length === 0) {
             enqueueSnackbar("No file selected", { variant: "error", autoHideDuration: 3000 })
             return; // No file selected, do nothing
+        }
+        let text = `Are you sure you want to submit this photo? This will override your current submission.`
+        if (!window.confirm(text)) {
+            enqueueSnackbar("Upload cancelled", { variant: "warning", autoHideDuration: 3000 })
+            return
         }
         let file = files[0]
         if ((file.size / 1024 / 1024) > 200) {
@@ -166,6 +174,7 @@ function Challenges(props) {
 
 
     const fileInput = useRef();
+    const updateFileInput = useRef();
 
     // getChallenge returns a challenge's state given its id.
     function getChallenge(id) {
@@ -234,18 +243,9 @@ function Challenges(props) {
                                                             </Button>
                                                         </Grid2>
                                                         <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
-                                                            <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                            <Grid2 sx={{ py: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                                 <Button sx={{ width: 1 }}
-                                                                    onClick={() => { setChallenge(item);fileInput.current?.click() }}
-                                                                    variant="outlined"
-                                                                    color="warning"
-                                                                    mode={"update"}
-                                                                    type="submit">Update Visit Submission
-                                                                </Button>
-                                                            </Grid2>
-                                                            <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
-                                                                <Button sx={{ width: 1 }}
-                                                                    onClick={() => { setChallenge(item);fileInput.current?.click() }}
+                                                                    onClick={() => { setChallenge(item);updateFileInput.current?.click() }}
                                                                     variant="outlined"
                                                                     color="warning"
                                                                     mode={"update"}
@@ -284,6 +284,15 @@ function Challenges(props) {
                 id={`input`}
                 accept="image/*"
                 onChange={(e) => {handleUploadClick(e)}}
+                style={{ display: 'none' }}
+            />
+            <input
+                ref={updateFileInput}
+                type="file"
+                key={`updateKeyinput`}
+                id={`updateInput`}
+                accept="image/*"
+                onChange={(e) => {handleUpdateClick(e)}}
                 style={{ display: 'none' }}
             />
         </>

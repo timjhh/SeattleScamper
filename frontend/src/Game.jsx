@@ -27,6 +27,10 @@ function Game(props) {
     const [remaining, setRemaining] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = (u) => {
+        if(u === '') {
+            setCurrentURL('')
+            return
+        }
         setShow(true)
         setCurrentURL(u)
     }
@@ -403,7 +407,7 @@ function Game(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <img className="modalimg" src={currentURL} />
+                    <img onClick={handleClose} className="modalimg" src={currentURL} />
                     <CloseIcon onClick={handleClose} sx={{ position: 'absolute', top: 0, right: 0 }} style={{color: "black", "cursor": "pointer"}} />
                 </Box>
             </Modal>
