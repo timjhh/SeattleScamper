@@ -9,12 +9,16 @@ import {
     Checkbox,
     Grid2,
     Button,
-    Box
+    Box,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
 } from "@mui/material";
 import { S3Client } from "@aws-sdk/client-s3";
 import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
 import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useRef } from 'react';
 
 // Challenges is a view for un-authenticated users to see all challenges.
@@ -46,13 +50,15 @@ function Challenges(props) {
         return input?.replaceAll(/\s|\\/g, "")
     }
 
+
     async function handleSubmitChallenge(file) {
         if (!challenge.id) {
             enqueueSnackbar("Invalid Challenge", { variant: "error", autoHideDuration: 3000 })
             return
         }
         try {
-            let stage = challenge.found ? CHALLENGE_STAGE : FOUND_STAGE
+            //throw "fuck"
+            let stage = getChallenge(challenge.id) ? CHALLENGE_STAGE : FOUND_STAGE
             const upload = new Upload({
                 client: s3,
                 params: {
@@ -68,7 +74,7 @@ function Challenges(props) {
                 setUProgress(totalProgress.toFixed(2))
             });
             await upload.done();
-    
+
             await props.postEndpoint("/challenge/", JSON.stringify({
                 id: challenge.id,
             }))
@@ -85,20 +91,53 @@ function Challenges(props) {
               }
         }
         setUProgress(0);
+    }
 
+    async function handleUpdateChallenge(file) {
+        if (!challenge.id) {
+            enqueueSnackbar("Invalid Challenge", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        try {
+            //throw "fuck"
+            let stage = getChallenge(challenge.id) ? CHALLENGE_STAGE : FOUND_STAGE
+            const upload = new Upload({
+                client: s3,
+                params: {
+                    Bucket: bucketName,
+                    Key: `${sanitize(props.team.team_name)}/${sanitize(challenge.name)}_${stage}`,
+                    Body: file,
+                    ContentType: 'image/jpeg'
+                },
+            });
+            let totalProgress = 0;
+            upload.on("httpUploadProgress", (progress) => {
+                totalProgress = (progress.loaded / progress.total) * 100
+                setUProgress(totalProgress.toFixed(2))
+            });
+            await upload.done();
+            await props.fetchEndpoint("/challenges/")
+            await props.fetchEndpoint("/team/")
+            await props.fetchEndpoint("/team/challenges/")
+        } catch(err) {
+            if (err instanceof Error && err.name === "AbortError") {
+                enqueueSnackbar(`Multipart upload was aborted. ${err.message}`, { variant: "error", autoHideDuration: 3000 })
+                console.error(`Multipart upload was aborted. ${err.message}`);
+              } else {
+                enqueueSnackbar(`Error uploading image: ${err}`, { variant: "error", autoHideDuration: 3000 })
+                console.error(`Error uploading image: ${err}`);
+              }
+        }
+        setUProgress(0);
     }
 
     async function handleUploadClick(event) {
+        console.log(event)
         const files = event.target.files;
         if (!files || files.length === 0) {
             enqueueSnackbar("No file selected", { variant: "error", autoHideDuration: 3000 })
             return; // No file selected, do nothing
         }
-        let text = `Are you sure you want to sumit this photo?`
-        // if (!window.confirm(text)) {
-        //     enqueueSnackbar("Upload canceled", { variant: "warning", autoHideDuration: 3000 })
-        //     return
-        // }
         let file = files[0]
         if ((file.size / 1024 / 1024) > 200) {
             enqueueSnackbar("File size must be < 200MiB", { variant: "error", autoHideDuration: 3000 })
@@ -106,6 +145,25 @@ function Challenges(props) {
         }
         handleSubmitChallenge(file)
     }
+
+
+    async function handleUpdateClick(event) {
+        console.log(event)
+        console.log(event.target)
+        console.log(stage)
+        const files = event.target.files;
+        if (!files || files.length === 0) {
+            enqueueSnackbar("No file selected", { variant: "error", autoHideDuration: 3000 })
+            return; // No file selected, do nothing
+        }
+        let file = files[0]
+        if ((file.size / 1024 / 1024) > 200) {
+            enqueueSnackbar("File size must be < 200MiB", { variant: "error", autoHideDuration: 3000 })
+            return
+        }
+        handleUpdateChallenge(file)
+    }
+
 
     const fileInput = useRef();
 
@@ -139,10 +197,10 @@ function Challenges(props) {
                                             <Box sx={{ position: 'relative' }}>
                                                 {getChallenge(item.id)?.found && (
                                                     <Typography sx={{ position: 'absolute', top: 0, left: 20 }}>✅</Typography>
-                                                    )}
-                                                    {getChallenge(item.id)?.completed && (
-                                                    <Typography sx={{ position: 'absolute', top: 0 }}>✅</Typography>
-                                                    )}
+                                                )}
+                                                {getChallenge(item.id)?.completed && (
+                                                <Typography sx={{ position: 'absolute', top: 0 }}>✅</Typography>
+                                                )}
                                             </Box>
                                             <Grid2 container direction="row">
                                                 <Grid2 item size={{ xs: 12, md: 6 }} sx={{ p: 1 }}>
@@ -159,11 +217,15 @@ function Challenges(props) {
                                                     <Button sx={{ width: 1 }} onClick={() => props.handleShow(`${BASE_URL}/challenges/${sanitize(item.name)}.jpg`)} variant="outlined">View</Button>
                                                 </Grid2>
                                                 {getChallenge(item.id)?.completed ? (
-                                                        <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                <Grid2 item size={{ xs: 12, md: 12 }}>
+                                                <Accordion>
+                                                    <AccordionSummary><Typography variant="h5"><b>Controls </b><ExpandMoreIcon/></Typography></AccordionSummary>
+                                                    <AccordionDetails>
+                                                        <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                             <Button sx={{ width: 1, mr:1 }}
                                                                 onClick={() => props.handleShow(`${BASE_URL}/${sanitize(props.team.team_name)}/${sanitize(item.name)}_${FOUND_STAGE}`)}
                                                                 variant="outlined"
-                                                                type="submit">View Submission
+                                                                type="submit">View Visit Submission
                                                             </Button>
                                                             <Button sx={{ width: 1, ml:1 }}
                                                                 onClick={() => props.handleShow(`${BASE_URL}/${sanitize(props.team.team_name)}/${sanitize(item.name)}_${CHALLENGE_STAGE}`)}
@@ -171,25 +233,41 @@ function Challenges(props) {
                                                                 type="submit">View Challenge Submission
                                                             </Button>
                                                         </Grid2>
+                                                        <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                            <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                                <Button sx={{ width: 1 }}
+                                                                    onClick={() => { setChallenge(item);fileInput.current?.click() }}
+                                                                    variant="outlined"
+                                                                    color="warning"
+                                                                    mode={"update"}
+                                                                    type="submit">Update Visit Submission
+                                                                </Button>
+                                                            </Grid2>
+                                                            <Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
+                                                                <Button sx={{ width: 1 }}
+                                                                    onClick={() => { setChallenge(item);fileInput.current?.click() }}
+                                                                    variant="outlined"
+                                                                    color="warning"
+                                                                    mode={"update"}
+                                                                    type="submit">Update Challenge Submission
+                                                                </Button>
+                                                            </Grid2>
+                                                        </Grid2>
+                                                    </AccordionDetails>
+                                                </Accordion>
+                                                </Grid2>
                                                     ) 
                                                     : (<Grid2 sx={{ p: 1 }} display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                         <Button sx={{ width: 1 }}
                                                             onClick={() => { setChallenge(item);fileInput.current?.click() }}
                                                             variant="outlined"
-                                                            type="submit">Submit {getChallenge(item.id)?.found ? "Challenge" : "Location"}
+                                                            mode={"submit"}
+                                                            type="submit">Submit {getChallenge(item.id)?.found ? "Challenge" : "Visit"}
                                                         </Button>
-                                                        <input
-                                                            ref={fileInput}
-                                                            type="file"
-                                                            accept="image/*"
-                                                            onChange={(e) => handleUploadClick(e, item)}
-                                                            style={{ display: 'none' }}
-                                                        />
                                                     </Grid2>
                                                     )
                                                 }
                                             </Grid2>
-
                                         </FormControl>
                                     </Paper>
                                 </Grid2>
@@ -198,6 +276,16 @@ function Challenges(props) {
                     </>
                 ))}
             </Grid2>
+            {/* Globalize the input option as it can be shared across all challenge submission buttons. */}
+            <input
+                ref={fileInput}
+                type="file"
+                key={`keyinput`}
+                id={`input`}
+                accept="image/*"
+                onChange={(e) => {handleUploadClick(e)}}
+                style={{ display: 'none' }}
+            />
         </>
     )
 }

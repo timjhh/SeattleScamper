@@ -145,8 +145,8 @@ function Game(props) {
     }, [challenges]);
 
     useInterval(function () {
-        // fetchEndpoint("/events/")
-        // fetchEndpoint("/teams/")
+        fetchEndpoint("/events/")
+        fetchEndpoint("/teams/")
     }, 5000)
 
     function useInterval(callback, delay) {
@@ -272,7 +272,8 @@ function Game(props) {
 
 
     async function fetchEvents() {
-        //await fetchEndpoint("/teams/")
+        await fetchEndpoint("/teams/")
+        await fetchEndpoint("/team/challenges/")
         // await fetchEndpoint("/zones/")
     }
 

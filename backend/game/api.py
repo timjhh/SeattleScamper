@@ -73,6 +73,8 @@ async def read_challenges(db: SessionDep):
 @router.post("/add/team/")
 async def read_team(
     team_name: str,
+    username: str,
+    password: str,
     db: SessionDep,
     current_user: Annotated[Team, Depends(auth.get_current_user)],
 ):
@@ -90,10 +92,10 @@ async def read_team(
             detail="Team already exists",
         )
 
-    password=auth.get_password_hash(team_name)
+    password=auth.get_password_hash(password)
     new_team = Team(
         team_name=team_name,
-        username=team_name,
+        username=username,
         score=0,
         hashed_password=password,
         challenges=[]

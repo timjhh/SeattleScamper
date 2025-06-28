@@ -11,12 +11,27 @@ body {
     margin: 0
 }
 
-.modalimg {
-    outline: none;
-    height: auto;
-    margin: auto;
-    width: 100%;
+
+/* For Mobile */
+@media screen and (max-width: 700px) {
+  .modalimg {
+      outline: none;
+      height: auto;
+      margin: auto;
+      width: 100%;
+  }
 }
+
+/* For Tablets */
+@media screen and (min-width: 700px) {
+  .modalimg {
+      outline: none;
+      height: auto;
+      margin: auto;
+      width: 50%;
+  }
+}
+
 
 .parallax {
     background-attachment: fixed;

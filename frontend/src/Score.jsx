@@ -17,7 +17,7 @@ function Score(props) {
     const [score, setScore] = useState({});
     useEffect(() => {
         if (props.teams.length > 0) {
-            let group = groupBy(props.teams, 'score')
+            let group = groupBy(props.teams.filter(t => t.username !== "timjhh"), 'score')
             setScore(group)
             // I'm sorry.
             props.setRank(Object.keys(group).sort().reverse().indexOf(props.team.score?.toString())+1)
