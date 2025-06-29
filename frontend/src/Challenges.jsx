@@ -20,6 +20,7 @@ import { enqueueSnackbar } from 'notistack';
 import { Upload } from '@aws-sdk/lib-storage';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useRef } from 'react';
+import mime from 'mime';
 
 // Challenges is a view for un-authenticated users to see all challenges.
 function Challenges(props) {
@@ -50,7 +51,15 @@ function Challenges(props) {
         return input?.replaceAll(/\s|\\/g, "")
     }
 
+    function fileExtension(name) {
+        // let parts = name.split(".")
+        // if(parts.length < 2) return name
+        // let extension = parts[1].toLowerCase()
+        // if(['mp4', 'mpeg', 'ogg', 'webm', 'mov'].includes(extension)) return `video/${extension}`
+        // return `image/${extension}`
 
+        return mime.getType(name)
+    }
     async function handleSubmitChallenge(file) {
         if (!challenge.id) {
             enqueueSnackbar("Invalid Challenge", { variant: "error", autoHideDuration: 3000 })
@@ -65,7 +74,7 @@ function Challenges(props) {
                     Bucket: bucketName,
                     Key: `${sanitize(props.team.team_name)}/${sanitize(challenge.name)}_${stage}`,
                     Body: file,
-                    ContentType: 'image/jpeg'
+                    ContentType: fileExtension(file.name),
                 },
             });
             let totalProgress = 0;
@@ -107,7 +116,7 @@ function Challenges(props) {
                     Bucket: bucketName,
                     Key: `${sanitize(props.team.team_name)}/${sanitize(challenge.name)}_${stage}`,
                     Body: file,
-                    ContentType: 'image/jpeg'
+                    ContentType: fileExtension(file.name),
                 },
             });
             let totalProgress = 0;
@@ -138,7 +147,6 @@ function Challenges(props) {
     }
 
     async function handleUploadClick(event) {
-        console.log(event)
         const files = event.target.files;
         if (!files || files.length === 0) {
             enqueueSnackbar("No file selected", { variant: "error", autoHideDuration: 3000 })
@@ -181,6 +189,10 @@ function Challenges(props) {
         return props.teamChallenges.find(c=>c.challenge_id===id)
     }
 
+    function isStartTime(date) {
+        return date >= Date.parse("29 Jun 2025 14:00:00 GMT-0700");
+    }
+
     return (
         <>
             <Box sx={{ my: 1, display: 'flex', justifyContent: 'space-between' }} alignItems={"center"}>
@@ -191,7 +203,7 @@ function Challenges(props) {
                 </Box>
             </Box>
             <Grid2 container direction="row" spacing={2}>
-                {props.challenges.map((item) => (
+                {!isStartTime(new Date()) ? (props.challenges.map((item) => (
                     <>
                         {hideCompleted && getChallenge(item.id)?.completed ?
                             (<></>)
@@ -229,6 +241,7 @@ function Challenges(props) {
                                                 <Grid2 item size={{ xs: 12, md: 12 }}>
                                                 <Accordion>
                                                     <AccordionSummary><Typography variant="h5"><b>Controls </b><ExpandMoreIcon/></Typography></AccordionSummary>
+                                                    <Typography variant="body-1" sx={{ p: 0, color: 'text.secondary' }}>*Some devices may have trouble viewing content in browser</Typography>
                                                     <AccordionDetails>
                                                         <Grid2 display={"flex"} justifyContent={"center"} item size={{ xs: 12, md: 12 }}>
                                                             <Button sx={{ width: 1, mr:1 }}
@@ -274,7 +287,9 @@ function Challenges(props) {
                             )
                         }
                     </>
-                ))}
+                ))) : (
+                    <Typography variant="h5">Game starting soon</Typography>
+                )}
             </Grid2>
             {/* Globalize the input option as it can be shared across all challenge submission buttons. */}
             <input
@@ -282,7 +297,7 @@ function Challenges(props) {
                 type="file"
                 key={`keyinput`}
                 id={`input`}
-                accept="image/*"
+                accept="image/*, video/*"
                 onChange={(e) => {handleUploadClick(e)}}
                 style={{ display: 'none' }}
             />
@@ -291,7 +306,7 @@ function Challenges(props) {
                 type="file"
                 key={`updateKeyinput`}
                 id={`updateInput`}
-                accept="image/*"
+                accept="image/*, video/*"
                 onChange={(e) => {handleUpdateClick(e)}}
                 style={{ display: 'none' }}
             />

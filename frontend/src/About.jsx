@@ -13,8 +13,9 @@ import { Parallax } from 'react-parallax';
 import './App.css';
 import seattleBg from "/src/assets/seattle.jpg"
 import heroBlossom from "/src/assets/hero-blossom.jpg"
-
-
+import example1 from '/src/assets/example1.png'
+import example2 from '/src/assets/example2.png'
+import example3 from '/src/assets/example3.png'
 
 function About(props) {
     return (
@@ -59,8 +60,8 @@ function About(props) {
                     <AccordionDetails>
                         <ul>
                             <li>The game will run from 1pm-6pm</li>
-                            <li>Players should meet at<a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/TWw4XDrGe4wsevyv9">Westlake Park Lightrail Station</a> at 1pm.</li>
-                            <li>Players should finish the game at<a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/ZmJf6Lk9nkoZHSz39">Parrington Lawn @ the University of Washginton</a> at 6pm. <b>Teams will receive a 10 point deduction for being late.</b></li>
+                            <li>Players should meet at <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/Parrington+Lawn,+Seattle,+WA+98105/@47.652027,-122.3180442,16.03z/data=!4m6!3m5!1s0x5490148cb696b529:0xb56819d1831fb7af!8m2!3d47.6579874!4d-122.3108909!16s%2Fg%2F11b8tg0xfp?entry=tts&g_ep=EgoyMDI1MDYwNC4wIPu8ASoASAFQAw%3D%3D&skid=ac4100fc-810d-461f-9b56-d8bfa4a0abe5">Parrington Lawn @ the University of Washginton</a> at 1pm.</li>
+                            <li>Players should finish the game at <a target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/ZmJf6Lk9nkoZHSz39">Parrington Lawn @ the University of Washginton</a> at 6pm. <b>Teams will receive a 10 point deduction for being late.</b></li>
                         </ul>
                     </AccordionDetails>
                 </Accordion>
@@ -106,6 +107,32 @@ function About(props) {
                         <Typography variant="h4">Tiebreaking Rules</Typography>
                         In the case of a tie with two or more teams that have the same amount of points, the team who has completed more challenges will win.
                         If that is the same, the quality of challenges submitted will be used as evidence for point deduction.
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary><Typography variant="h3"><b>How To Play</b></Typography></AccordionSummary>
+                    <AccordionDetails>
+                        <Grid2 spacing={3} container direction="row" display={"flex"} alignItems={"center"} justifyContent={"space-evenly"} alignContent={"center"}>
+                            <Grid2 item size={{xs: 12, md: 4}}>
+                                <Typography variant="h5">Step 1: Visit a neighborhood denoted on the map. Neighborhoods will be denoted by remaining points possible to get from challenges.</Typography>
+                                <Box>
+                                    <img className="imgborder" src={example1} />
+                                </Box>
+                            </Grid2>
+                            <Grid2 item size={{xs: 12, md: 4}}>
+                                <Typography variant="h5">Step 2: Find a challenge in that neighborhood to do. You must submit a picture of your team with all members present using the "Submit Visit" button.</Typography>
+                                <Box>
+                                    <img className="imgborder" src={example2} />
+                                </Box>
+                            </Grid2>
+                            <Grid2 item size={{xs: 12, md: 4}}>
+                                <Typography variant="h5">Step 3: Complete the challenge and submit photo or video evidence as requested. Keep in mind longer videos will take longer to upload - you may want to cut the video down.</Typography>
+                                <Box>
+                                    <img className="imgborder" src={example3} />
+                                </Box>
+                            </Grid2>
+                        </Grid2>
+
                     </AccordionDetails>
                 </Accordion>
                 <Accordion>

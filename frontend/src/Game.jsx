@@ -149,8 +149,8 @@ function Game(props) {
     }, [challenges]);
 
     useInterval(function () {
-        fetchEndpoint("/events/")
-        fetchEndpoint("/teams/")
+            fetchEndpoint("/events/")
+            fetchEndpoint("/teams/")
     }, 5000)
 
     function useInterval(callback, delay) {
@@ -246,6 +246,7 @@ function Game(props) {
 
     function createBubbleByNeighborhood(neighborhood, count, size) {
         let rs = d3.select(`#${neighborhood}`)
+        if(!rs || !rs.node()) return;
         let bbox = rs.node().getBBox()
 
         let cr = d3.select("#pathsG").select(".zones")

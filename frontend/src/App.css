@@ -32,6 +32,9 @@ body {
   }
 }
 
+.imgborder {
+  border: 5px solid black;
+}
 
 .parallax {
     background-attachment: fixed;
