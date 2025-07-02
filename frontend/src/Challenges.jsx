@@ -203,7 +203,7 @@ function Challenges(props) {
                 </Box>
             </Box>
             <Grid2 container direction="row" spacing={2}>
-                {!isStartTime(new Date()) ? (props.challenges.map((item) => (
+                {isStartTime(new Date()) ? (props.challenges.map((item) => (
                     <>
                         {hideCompleted && getChallenge(item.id)?.completed ?
                             (<></>)

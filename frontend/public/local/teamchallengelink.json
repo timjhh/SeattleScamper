@@ -1,0 +1,1028 @@
+[
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 38,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 44,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 6,
+        "completed": 0,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 13,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 46,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 36,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 31,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 34,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 34,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 2,
+        "completed": 0,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 36,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 41,
+        "completed": 0,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 9,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 4,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 2,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 30,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 12,
+        "completed": 0,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 15,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 37,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 41,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 40,
+        "completed": 0,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 45,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 4,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 38,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 44,
+        "completed": 0,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 2,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 31,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 44,
+        "completed": 0,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 4,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 12,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 14,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 27,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 26,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 34,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 4,
+        "completed": 0,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 33,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 4,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 40,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 29,
+        "completed": 0,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 30,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 45,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 25,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 29,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 36,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 15,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 18,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 19,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 44,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 38,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 29,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 38,
+        "completed": 0,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 44,
+        "completed": 0,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 21,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 34,
+        "completed": 0,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 41,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 25,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 31,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 31,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 1,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 13,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 33,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 36,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 26,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 34,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 13,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 2,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 36,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 27,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 39,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 34,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 31,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 41,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 35,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 37,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 39,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 17,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 3,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 13,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 41,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 5,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 1,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 29,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 25,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 7,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 33,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 18,
+        "completed": 1,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 26,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 19,
+        "completed": 0,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 9,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 20,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 9,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 43,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 32,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 17,
+        "completed": 0,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 7,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 4,
+        "completed": 0,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 41,
+        "completed": 0,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 42,
+        "completed": 1,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 10,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 7,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 23,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 9,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 2
+    },
+    {
+        "challenge_id": 9,
+        "completed": 0,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 7,
+        "completed": 1,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 6,
+        "completed": 1,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 10,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 7,
+        "completed": 1,
+        "found": 1,
+        "team_id": 5
+    },
+    {
+        "challenge_id": 6,
+        "completed": 0,
+        "found": 1,
+        "team_id": 3
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 1
+    },
+    {
+        "challenge_id": 7,
+        "completed": 0,
+        "found": 1,
+        "team_id": 6
+    },
+    {
+        "challenge_id": 7,
+        "completed": 0,
+        "found": 1,
+        "team_id": 4
+    },
+    {
+        "challenge_id": 7,
+        "completed": 0,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 23,
+        "completed": 0,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 8,
+        "completed": 0,
+        "found": 1,
+        "team_id": 7
+    },
+    {
+        "challenge_id": 8,
+        "completed": 1,
+        "found": 1,
+        "team_id": 8
+    },
+    {
+        "challenge_id": 12,
+        "completed": 0,
+        "found": 1,
+        "team_id": 8
+    }
+]

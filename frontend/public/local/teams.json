@@ -1,0 +1,65 @@
+[
+    {
+        "hashed_password": "$2b$12$8vFV2m/UVBt6zt5w6aa4zud5zjkbGxKbYxj.bXYALPjqgyLiijSe6",
+        "id": 0,
+        "score": 0,
+        "team_name": "timjhh",
+        "username": "timjhh"
+    },
+    {
+        "hashed_password": "$2b$12$gXhAypaYnWxRzvT4KLbRoe6Q.Q3L5YBe.BghtW7NBUHRL3OE2VQ5O",
+        "id": 1,
+        "score": 122,
+        "team_name": "Druggies 💊",
+        "username": "oneone"
+    },
+    {
+        "hashed_password": "$2b$12$iMNWZWOEXAyuoSM.5SZWJePprwlHjaXkf/KqsYyPhr0wkDjadp.yq",
+        "id": 2,
+        "score": 125,
+        "team_name": "Free Transfer",
+        "username": "twotwo"
+    },
+    {
+        "hashed_password": "$2b$12$cBu/MBN.j.g0u1wauBrlteZ.cWhwMCeQC/cHEsxvg0lIPG5yrltBS",
+        "id": 3,
+        "score": 137,
+        "team_name": "tfw da train am on da trak",
+        "username": "fivefive"
+    },
+    {
+        "hashed_password": "$2b$12$dCttY.osDVNX7rmcwB/4VOFWJU6XFXptPxQe4xUCCrbe46tKczHj2",
+        "id": 4,
+        "score": 139,
+        "team_name": "Margaritaville Transit Authority",
+        "username": "threethree"
+    },
+    {
+        "hashed_password": "$2b$12$ps68UzYNf0ftK4Nyr9NiI.zp0J/Z1NhQS/C32qcjDU8ay/ypVsCGy",
+        "id": 5,
+        "score": 116,
+        "team_name": "13adults2kids",
+        "username": "sixsix"
+    },
+    {
+        "hashed_password": "$2b$12$NSWrwEMhLEIfe2oF.7qjzuQgStjjIAFXm4xzvWyENDZIFLom0h2aS",
+        "id": 6,
+        "score": 102,
+        "team_name": "Aaron Lieberman",
+        "username": "sevenseven"
+    },
+    {
+        "hashed_password": "$2b$12$o69Xbb.82TChJM9IWJtcmewKwOL1QUoklbcfo/rekGj6I5Ds4vUmW",
+        "id": 7,
+        "score": 119,
+        "team_name": "Sounding Transit",
+        "username": "fourfour"
+    },
+    {
+        "hashed_password": "$2b$12$NFE8f/c16mWEgZS4Wn4ATupGFOJ5z2UU.Flw0vvcVMAyobjUCBcVO",
+        "id": 8,
+        "score": 118,
+        "team_name": "Lightly Railed",
+        "username": "eighteight"
+    }
+]

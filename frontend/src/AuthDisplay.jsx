@@ -62,6 +62,12 @@ function AuthDisplay(props) {
   // fetchEndpoint grabs data from and endpoint and handles its result by
   // storing it in specific frontend state.
   async function fetchEndpoint(endpoint) {
+    let url;
+    if(props.backend === 'local') {
+    url = `/${props.backend}/${endpoint.replaceAll("/", "")}.json`;
+    } else {
+        url = props.backend + endpoint;
+    }
     let authHeaders = {
       headers: new Headers({
         'Authorization': `Bearer ${props.auth}`,
@@ -70,7 +76,7 @@ function AuthDisplay(props) {
       })
     }
     return new Promise((resolve) => {
-      fetch(props.backend + endpoint, authHeaders)
+      fetch(url, authHeaders)
         .then((response) => {
           return response.json()
         })

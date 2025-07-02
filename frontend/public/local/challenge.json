@@ -1,0 +1,324 @@
+[
+    {
+        "description": "Swap the contents of two vessels containing liquid without the liquids completely mixing.",
+        "id": 1,
+        "name": "Tea Time",
+        "neighborhood": "Roosevelt",
+        "points": 3
+    },
+    {
+        "description": "The entire team must remove their socks for the remainder of the game. If you choose to accept, submit a picture of the socks in one bunch. If you choose not to, do not submit any picture for this challenge.",
+        "id": 2,
+        "name": "Shoesevelt",
+        "neighborhood": "Roosevelt",
+        "points": 3
+    },
+    {
+        "description": "Stay stationary for three minutes. Your team may not move more than 20 feet in this time. You must complete this challenge now, or veto it for the remainder of the game.",
+        "id": 3,
+        "name": "Stationary",
+        "neighborhood": "Roosevelt",
+        "points": 3
+    },
+    {
+        "description": "Skip a rock four times.",
+        "id": 4,
+        "name": "Skipper",
+        "neighborhood": "GreenLake",
+        "points": 5
+    },
+    {
+        "description": "Did you know every U.S. state, including Washington, has a state drink? Find out what Washington's state drink is and submit a picture of it.",
+        "id": 5,
+        "name": "State Drink",
+        "neighborhood": "Roosevelt",
+        "points": 3
+    },
+    {
+        "description": "Take a picture in the Barbie Box.",
+        "id": 6,
+        "name": "Hi Barbie",
+        "neighborhood": "UniversityDistrict",
+        "points": 2
+    },
+    {
+        "description": "This is the oldest coffee shop in Seattle. Find out what year it opened, and write an equation using the bill denominations on the wall using the (+, -, ^, *) operators that results in this year in four operations or more. For example, ((100 * 20) + 10 + 10 + 5). You may not re-use a single bill's value more than once.",
+        "id": 7,
+        "name": "Math Test",
+        "neighborhood": "UniversityDistrict",
+        "points": 3
+    },
+    {
+        "description": "Rank every train station on the 1 line in tiers from S-F. Submit a screenshot of your rankings.",
+        "id": 8,
+        "name": "University Research",
+        "neighborhood": "UniversityDistrict",
+        "points": 3
+    },
+    {
+        "description": "Have one member of your team put their dogs (feet) in the water.",
+        "id": 9,
+        "name": "Woof Woof",
+        "neighborhood": "UniversityDistrict",
+        "points": 5
+    },
+    {
+        "description": "Mail a letter or postcard to my friend Dill. They live at 266 Maple St, Apartment 1, Burlington, VT, 05401.",
+        "id": 10,
+        "name": "Postal Service",
+        "neighborhood": "UniversityDistrict",
+        "points": 5
+    },
+    {
+        "description": "Submit ten photos of unique plants from Asia on the Seek app by INaturalist. Submit a screenshot of your 'My Plants' page.",
+        "id": 11,
+        "name": "Field Survey",
+        "neighborhood": "Montlake",
+        "points": 8
+    },
+    {
+        "description": "Bring a donut or pastry to the 'Black Sun' Sculpture and take a picture with it.",
+        "id": 12,
+        "name": "Bottom Text",
+        "neighborhood": "Broadway",
+        "points": 3
+    },
+    {
+        "description": "Add a book about Seattle or by a local author to your \"want to read\" on Goodreads, Storygraph, Fable or Uncover.",
+        "id": 13,
+        "name": "Story Points",
+        "neighborhood": "Broadway",
+        "points": 3
+    },
+    {
+        "description": "Climb something on the bike demo trail.",
+        "id": 14,
+        "name": "Let's Go Climbing!",
+        "neighborhood": "SouthLakeUnion",
+        "points": 3
+    },
+    {
+        "description": "Take a picture of a George Pocock Rowing Wherry.",
+        "id": 15,
+        "name": "Whatever Floats Your Boat",
+        "neighborhood": "SouthLakeUnion",
+        "points": 3
+    },
+    {
+        "description": "Draw two unique sculptures.",
+        "id": 16,
+        "name": "The Olympics",
+        "neighborhood": "Belltown",
+        "points": 3
+    },
+    {
+        "description": "Nordstrom was founded by Swede Jown W. Nordstrom, who made his money from gold in Klondike, Alaska. Assemble your best mining outfit for $70 or less and send a picture of all articles of clothing arranged. You do not need to try it on.",
+        "id": 17,
+        "name": "Prospector Show",
+        "neighborhood": "Belltown",
+        "points": 5
+    },
+    {
+        "description": "Find a purple flower.",
+        "id": 18,
+        "name": "Flowering",
+        "neighborhood": "Pike-Market",
+        "points": 3
+    },
+    {
+        "description": "Kiss the Blarney Stone Pub.",
+        "id": 19,
+        "name": "Folklore",
+        "neighborhood": "CentralBusinessDistrict",
+        "points": 2
+    },
+    {
+        "description": "Bike symmetry is so impressive. How do they make those tires so round? Draw a circle with >=90% accuracy and submit a screenshot. https://neal.fun/perfect-circle/.",
+        "id": 20,
+        "name": "Around and Around",
+        "neighborhood": "Greenlake",
+        "points": 2
+    },
+    {
+        "description": "Sign up for a library card. If any player on your team has a library card, you may instead check out a book.",
+        "id": 21,
+        "name": "Biblioteca",
+        "neighborhood": "CentralBusinessDistrict",
+        "points": 4
+    },
+    {
+        "description": "Submit a picture of any piece of art.",
+        "id": 22,
+        "name": "Get Fryed",
+        "neighborhood": "FirstHill",
+        "points": 4
+    },
+    {
+        "description": "The College Inn recently closed down its trivia after 116 years in service. Find and place a flower at its doorstep as a sign of respect.",
+        "id": 23,
+        "name": "RIP",
+        "neighborhood": "UniversityDistrict",
+        "points": 4
+    },
+    {
+        "description": "Play ping pong to two points using anything you can fashion into a ball and paddles.",
+        "id": 24,
+        "name": "Ping Pong",
+        "neighborhood": "InternationalDistrict",
+        "points": 3
+    },
+    {
+        "description": "Add a calendar event to your calendar and submit a screenshot for one of the movies at the mural https://www.seattlecenter.com/events/featured-events/movies-at-the-mural.",
+        "id": 25,
+        "name": "Movies At The Mural",
+        "neighborhood": "LowerQueenAnne",
+        "points": 2
+    },
+    {
+        "description": "Make your own climate pledge and follow through with it, unlike Amazon's pledge to become Carbon Neutral by 2040. Pick up one piece of trash and throw it away.",
+        "id": 26,
+        "name": "I Like Trees",
+        "neighborhood": "LowerQueenAnne",
+        "points": 3
+    },
+    {
+        "description": "Purchase one 'The Cookie' and take a picture of the receipt.",
+        "id": 27,
+        "name": "The Cookie",
+        "neighborhood": "LowerQueenAnne",
+        "points": 3
+    },
+    {
+        "description": "Play a complete round of one arcade game.",
+        "id": 28,
+        "name": "Oasis",
+        "neighborhood": "InternationalDistrict",
+        "points": 3
+    },
+    {
+        "description": "Without using the internet, guess how many stairs go from the bottom to top of the needle, within 50. If you are incorrect, do not submit this challenge. The answer can be found at https://www.spaceneedle.com/b2s-faq.",
+        "id": 29,
+        "name": "World's Fair",
+        "neighborhood": "LowerQueenAnne",
+        "points": 3
+    },
+    {
+        "description": "Bring a pastry or cup of water from one Scandinavian Bakery to another. Submit a picture at your second bakery.",
+        "id": 30,
+        "name": "Scandinavian Entry",
+        "neighborhood": "LowerQueenAnne",
+        "points": 2
+    },
+    {
+        "description": "Find something older than your youngest team member.",
+        "id": 31,
+        "name": "Vintage!",
+        "neighborhood": "Fremont",
+        "points": 3
+    },
+    {
+        "description": "Take a picture of a live animal. No dogs, no birds. Chickens and hens are allowed.",
+        "id": 32,
+        "name": "No Dogs, No Birds",
+        "neighborhood": "GreenLake",
+        "points": 3
+    },
+    {
+        "description": "It's pride month! Kiss your friend of the same gender - it does not have to be on the lips.",
+        "id": 33,
+        "name": "Gush at the Fountain",
+        "neighborhood": "LowerQueenAnne",
+        "points": 3
+    },
+    {
+        "description": "One team member must memorize and recite the first paragraph of the Communist Manifesto to another team member in its entirety. If you mess up, you must start over.",
+        "id": 34,
+        "name": "The Manifesto",
+        "neighborhood": "Fremont",
+        "points": 5
+    },
+    {
+        "description": "Find a piece of the Berlin Wall. Take a picture with it including all of your team members.",
+        "id": 35,
+        "name": "Tear Down This Wall ",
+        "neighborhood": "Fremont",
+        "points": 2
+    },
+    {
+        "description": "Troll your friend by texting them a piece of misinformation. Submit a screenshot of this epic troll.",
+        "id": 36,
+        "name": "Haha xd",
+        "neighborhood": "Fremont",
+        "points": 2
+    },
+    {
+        "description": "Take an open mouth 'look at this meme' picture pointing at Lake Union Park. Go to Lake Union Park and take the same photo looking at Gas Works Park.",
+        "id": 37,
+        "name": "Pro Union",
+        "neighborhood": "Wallingford",
+        "points": 10
+    },
+    {
+        "description": "Hold a race between two creates on wheels of at least 5 feet. Submit a picture of the winner.",
+        "id": 38,
+        "name": "Speed Racer",
+        "neighborhood": "Wallingford",
+        "points": 3
+    },
+    {
+        "description": "Gas Works Park rests at around 68' above sea level. That's not high enough. Reach an elevation of at least 150' above sea level. Submit a screenshot of your elevation.",
+        "id": 39,
+        "name": "Get High",
+        "neighborhood": "Wallingford",
+        "points": 3
+    },
+    {
+        "description": "Take a picture of Bellevue.",
+        "id": 40,
+        "name": "Bellevue Bellevue Bellevue",
+        "neighborhood": "Broadway",
+        "points": 3
+    },
+    {
+        "description": "It's stand up time! One member of the team must ask AI to generate a joke about Seattle, and write one themselves. Present these jokes to the rest of the team without them knowing the source. If your joke is voted funnier than the AI generated joke, submit a screenshot of yours. Otherwise, this challenge is failed. Do not submit anything.",
+        "id": 41,
+        "name": "Get Amped",
+        "neighborhood": "Broadway",
+        "points": 3
+    },
+    {
+        "description": "In parkour civilization, nobody goes up the fountain. It's much safer to play it safe with eight horizontal jumps across. Make it across the fountain using eight or less stones.",
+        "id": 42,
+        "name": "Parkour Civilization",
+        "neighborhood": "Broadway",
+        "points": 4
+    },
+    {
+        "description": "Submit a picture with two or more cats present in the same shot.",
+        "id": 43,
+        "name": "Twice Sold Tales",
+        "neighborhood": "Broadway",
+        "points": 3
+    },
+    {
+        "description": "Visit a location shown in Diners, Drive ins and Dives.",
+        "id": 44,
+        "name": "Diners, Drive ins and Dives",
+        "neighborhood": "Wallingford",
+        "points": 3
+    },
+    {
+        "description": "Sir Galahad is well known for being one of the three achievers in Arthurian legend. Find an unusual, preferably grail-like vessel and submit a picture of one teammate drinking from it.",
+        "id": 45,
+        "name": "Sir Galahad",
+        "neighborhood": "Broadway",
+        "points": 4
+    },
+    {
+        "description": "Submit a picture of any light rail station.",
+        "id": 46,
+        "name": "The End",
+        "neighborhood": "Pinehurst",
+        "points": 10
+    }
+]

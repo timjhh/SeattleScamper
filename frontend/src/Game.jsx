@@ -148,10 +148,10 @@ function Game(props) {
         })
     }, [challenges]);
 
-    useInterval(function () {
-            fetchEndpoint("/events/")
-            fetchEndpoint("/teams/")
-    }, 5000)
+    // useInterval(function () {
+    //         fetchEndpoint("/events/")
+    //         fetchEndpoint("/teams/")
+    // }, 5000)
 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
@@ -294,6 +294,12 @@ function Game(props) {
     // fetchEndpoint grabs data from and endpoint and handles its result by
     // storing it in specific frontend state.
     async function fetchEndpoint(endpoint) {
+        let url;
+        if(props.backend === 'local') {
+        url = `/${props.backend}/${endpoint.replaceAll("/", "")}.json`;
+        } else {
+            url = props.backend + endpoint;
+        }
         let authHeaders = {
             headers: new Headers({
                 'Authorization': `Bearer ${props.auth}`,
@@ -302,7 +308,7 @@ function Game(props) {
             })
         }
         return new Promise((resolve) => {
-            fetch(props.backend + endpoint, authHeaders)
+            fetch(url, authHeaders)
                 .then((response) => {
                     return response.json()
                 })
@@ -356,6 +362,13 @@ function Game(props) {
 
     async function postEndpoint(endpoint, body) {
         let op = endpoint?.replaceAll("/", "")
+        let url;
+        if(props.backend === 'local') {
+        url = `/${props.backend}/${endpoint.replaceAll("/", "")}.json`;
+        console.log(url)
+        } else {
+            url = props.backend + endpoint;
+        }
         return new Promise((resolve) => {
             fetch(props.backend + endpoint, {
                 method: 'POST',
